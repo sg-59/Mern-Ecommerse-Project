@@ -4,11 +4,15 @@ const mongoose=require('mongoose')
 const dotenv=require('dotenv')
 const userrouter=require('./router/user')
 const authrouter=require('./router/auth')
-const productrouter=require('./router/product')
+const mensproductrouter=require('./router/mensproduct')
+const womensproductrouter=require('./router/womensproduct')
+const kidsproductrouter=require('./router/kidsproduct')
 const cartrouter=require('./router/cart')
 const orderrouter=require('./router/order')
+const cors=require('cors')
 
 dotenv.config()
+app.use(cors())
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{
     console.log("DB connection is successfull !")}).catch((err)=>{
@@ -17,7 +21,9 @@ console.log(err);
 app.use(express.json())
     app.use('/api/user',userrouter);
     app.use('/api/auth',authrouter);
-    app.use('/api/product',productrouter);
+    app.use('/api/mensproduct',mensproductrouter);
+    app.use('/api/womensproduct',womensproductrouter);
+    app.use('/api/kidsproduct',kidsproductrouter);
     app.use('/api/cart',cartrouter);
     app.use('/api/order',orderrouter);
 

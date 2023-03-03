@@ -2,6 +2,7 @@ import React from 'react'
 import { categories } from '../Data'
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 const Card=styled.div`
@@ -31,11 +32,16 @@ const Titles=styled.div`
 const Category = ({item}) => {
     console.log("hdjjdhhd",item)
   return (
+    
         <Card>
+            <Link to={`/${item.title}`}>
 <Image src={item.img}/>
 <Titles>{item.title}<br></br>
 </Titles>
+</Link>
 </Card>
+
+
    
   )
 }
