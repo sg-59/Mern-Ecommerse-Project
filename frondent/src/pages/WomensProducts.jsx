@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar';
 import Advertisement from '../components/Advertisement';
 import Newsletter from '../components/Newsletter';
@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { womensProducts } from '../Data';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Container=styled.div`
     display: flex;
@@ -42,9 +44,69 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const WomensProducts = () => {
-    let womensproduct=womensProducts.map((item)=>{
+
+  const [state,setstate]=useState({})
+  const[Pricefilter,setpricefilter]=useState('newest')
+  const [womenState,womenSetstate]=useState([])
+  const [filterwomenState,filterwomenSetstate]=useState([])
+
+
+
+const filterHandle = (e)=>{
+const value=e.target.value
+
+setstate({
+  ...state,
+[e.target.name]:value
+})
+}
+console.log("women now checking",state)
+
+useEffect(()=>{
+
+  const womensApifunction =async ()=>{
+    const womensApi="http://localhost:5000/api/womensproduct";
+ let response=await axios.get(womensApi);
+ console.log("womens api",response.data)
+ womenSetstate(response.data)
+  }
+
+  womensApifunction()
+
+},[state])
+
+useEffect(()=>{
+
+filterwomenSetstate(
+  womenState.filter((item)=>
+  Object.entries(state).every(([key,value])=>item[key].includes(value))
+  )
+)
+if(Pricefilter == 'newest'){
+  filterwomenSetstate((prev)=>
+[...prev].sort((a,b)=>a.createdAt - b.createdAt )
+)
+}else if(Pricefilter == "asc"){
+  filterwomenSetstate((prev)=>
+  [...prev].sort((a,b)=>a.price-b.price)
+  )
+}else if(Pricefilter == "desc"){
+filterwomenSetstate((prev)=>
+[...prev].sort((a,b)=>b.price-a.price)
+)
+
+}
+
+
+},[state,womenState,Pricefilter])
+
+
+
+
+    let womensproduct=filterwomenState.map((item)=>{
         return (
         <>
+        <Link to={`/selectedproducts/${item._id}`}>
         <Card style={{ width: '18rem',margin:"1.5em",backgroundColor:"#ffffff"}}>
           <Card.Img variant="top" src={item.img} style={{height:'18em'}} />
           <Card.Body>
@@ -56,6 +118,7 @@ const WomensProducts = () => {
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>
+        </Link>
         </>
         )
     })
@@ -67,34 +130,34 @@ const WomensProducts = () => {
 <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
-          <Select>
-            <Option disabled selected>
+          <Select name="color" onChange={filterHandle}>
+            <Option disabled >
               Color
             </Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Blue</Option>
-            <Option>Yellow</Option>
-            <Option>Green</Option>
+            <Option>white</Option>
+            <Option>black</Option>
+            <Option>red</Option>
+            <Option>blue</Option>
+            <Option>yellow</Option>
+            <Option>green</Option>
           </Select>
-          <Select>
-            <Option disabled selected>
+          <Select  name="size" onChange={filterHandle}>
+            <Option disabled>
               Size
             </Option>
-            <Option>XS</Option>
-            <Option>S</Option>
-            <Option>M</Option>
-            <Option>L</Option>
-            <Option>XL</Option>
+            <Option>xs</Option>
+            <Option>s</Option>
+            <Option>m</Option>
+            <Option>l</Option>
+            <Option>xl</Option>
           </Select>
         </Filter>
         <Filter>
           <FilterText>Sort Products:</FilterText>
-          <Select>
-            <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
+          <Select onChange={(e)=>setpricefilter(e.target.value)}>
+            <Option value="newest">Newest</Option>
+            <Option value="asc">Price (asc)</Option>
+            <Option value="desc">Price (desc)</Option>
           </Select>
         </Filter>
       </FilterContainer>

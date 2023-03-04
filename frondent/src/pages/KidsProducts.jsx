@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar';
 import Advertisement from '../components/Advertisement';
 import Newsletter from '../components/Newsletter';
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { kidsProducts } from '../Data';
+import axios from 'axios';
 
 
 const Container=styled.div`
@@ -44,7 +45,64 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const KidsProducts = () => {
-    let kidsproduct=kidsProducts.map((item)=>{
+const [state,setstate]=useState({})
+const [kidstate,kidsSetstate]=useState([])
+const [filterState,setfilterSetstate]=useState([])
+const [priceFilter,setPricefilter]=useState("newest")
+ 
+console.log("filter price",priceFilter)
+
+const filterHandle = (e)=>{
+  let value=e.target.value
+setstate ({
+  ...state,
+[e.target.name]:value
+})
+}
+
+console.log("kids  products filter",state)
+
+useEffect(()=>{
+
+  const kidsApifunction =async ()=>{
+    const kidsApi="http://localhost:5000/api/kidsproduct";
+ let response=await axios.get(kidsApi);
+ console.log("kids api",response.data)
+ kidsSetstate(response.data)
+  }
+
+  kidsApifunction()
+
+},[state])
+
+useEffect(()=>{
+setfilterSetstate(
+  kidstate.filter((item)=>
+  Object.entries(state).every(([key,value])=>item[key].includes(value))
+  )
+)
+
+if(priceFilter=="newest"){
+  setfilterSetstate((prev)=>
+  [...prev].sort((a,b)=>a.createdAt - b.createdAt)
+  )
+}else if(priceFilter == "asc"){
+  setfilterSetstate((prev)=>
+  [...prev].sort((a,b)=> a.price - b.price)
+  )
+}else if(priceFilter == "desc"){
+setfilterSetstate((prev)=>
+[...prev].sort((a,b)=> b.price- a.price)
+)
+
+}
+},[state,kidstate,priceFilter])
+
+
+
+
+
+    let kidsproduct=filterState.map((item)=>{
         return (
         <>
         <Card style={{ width: '18rem',margin:"1.5em",backgroundColor:"#ffffff"}}>
@@ -69,34 +127,34 @@ const KidsProducts = () => {
 <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
-          <Select>
-            <Option disabled selected>
+          <Select name='color' onChange={filterHandle}>
+            <Option disabled>
               Color
             </Option>
             <Option>grey</Option>
             <Option>rose</Option>
-            <Option>Red</Option>
+            <Option>red</Option>
             <Option>blue</Option>
             <Option>yellow</Option>
             <Option>green</Option>
           </Select>
-          <Select>
-            <Option disabled selected>
+          <Select name='size' onChange={filterHandle}>
+            <Option disabled>
               Size
             </Option>
-            <Option>XS</Option>
-            <Option>S</Option>
-            <Option>M</Option>
-            <Option>L</Option>
-            <Option>XL</Option>
+            <Option>xs</Option>
+            <Option>s</Option>
+            <Option>m</Option>
+            <Option>l</Option>
+            <Option>xl</Option>
           </Select>
         </Filter>
         <Filter>
           <FilterText>Sort Products:</FilterText>
-          <Select>
-            <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
+          <Select onChange={(e)=>setPricefilter(e.target.value)}>
+            <Option value="newest">Newest</Option>
+            <Option value="asc">Price (asc)</Option>
+            <Option value="desc">Price (desc)</Option>
           </Select>
         </Filter>
       </FilterContainer>

@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import Navbar from '../components/Navbar';
 import Advertisement from '../components/Advertisement';
 import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
+import { useLocation } from 'react-router-dom';
+import { publicRequest } from '../requestMethod';
 
 const Container = styled.div``;
 
@@ -111,6 +113,21 @@ const Button = styled.button`
 `;
 
 const SelectedProducts = () => {
+  const Location=useLocation()
+  const id=Location.pathname.split('/')[1]
+  console.log("id undo ?",id);
+  const[product,setproduct]=useState({})
+
+  useEffect(()=>{
+const getProduct = ()=>{
+  try{
+const res=publicRequest.get()
+  }catch(err){}
+}
+getProduct()
+  },[id])
+
+
   return (
     <Container>
     <Navbar />

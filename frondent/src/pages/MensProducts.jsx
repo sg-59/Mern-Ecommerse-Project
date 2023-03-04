@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { mensProducts } from "../Data";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -60,31 +61,65 @@ const MensProducts = () => {
 
   console.log(filter);
 
-  useEffect(()=>{
-    const Getproducts =async ()=>{
-      try{
-        const Api="http://localhost:5000/api/mensproduct"
-        const response= await axios.get(Api)
+  useEffect(() => {
+    const Getproducts = async () => {
+      try {
+        const Api = "http://localhost:5000/api/mensproduct";
+        const response = await axios.get(Api);
         console.log(response.data);
-        setMenpro(response.data)
-      }catch(err){
-console.log("Error is =",err);
+        setMenpro(response.data);
+      } catch (err) {
+        console.log("Error is =", err);
       }
-    }
-    Getproducts()
-  },[filter])
+    };
+    Getproducts();
+  }, [filter]);
 
-  useEffect(()=>{
- setfilteredmenpro(
-  menspro.filter((item)=>(
-    Object.entries(filter).every(([key,value])=>item[key].includes(value))
-  ))
- );
-  },[filter,menspro])
-  
+  useEffect(() => {
+    setfilteredmenpro(
+      menspro.filter((item) =>
+        Object.entries(filter).every(([key, value]) =>
+          item[key].includes(value)
+        )
+      )
+    );
+    if(sortPrice=="newest"){
+      setfilteredmenpro((prev)=>
+      [...prev].sort((a,b)=>a.createdAt - b.createdAt)
+      );
+    }else if(sortPrice=="asc"){
+      setfilteredmenpro((prev)=>
+      [...prev].sort((a,b)=> a.price - b.price)
+      );
+    }else if(sortPrice == "desc"){
+      setfilteredmenpro((prev)=>
+      [...prev].sort((a,b)=> b.price - a.price)
+      )
+    }
+
+  }, [filter, menspro,sortPrice]);
+
+//   useEffect(()=>{
+// if(sortPrice=="newest"){
+//   setSortprice((prev)=>
+//   [...prev].sort((a,b)=>a.createdAt - b.createdAt)
+//   );
+// }else if(sortPrice=="asc"){
+//   setSortprice((prev)=>
+//   [...prev].sort((a,b)=> a.price - b.price)
+//   );
+// }else if(sortPrice == "desc"){
+//   setSortprice((prev)=>
+//   [...prev].sort((a,b)=> b.price - a.price)
+//   )
+// }
+
+//   },[sortPrice])
+
   let mensproduct = filteredmenpro.map((item) => {
     return (
       <>
+       <Link to={`/selectedproducts/${item._id}`}>
         <Card
           style={{
             width: "18rem",
@@ -102,6 +137,7 @@ console.log("Error is =",err);
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>
+        </Link>
       </>
     );
   });
