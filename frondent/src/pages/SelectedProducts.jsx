@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Navbar from '../components/Navbar';
-import Advertisement from '../components/Advertisement';
-import Newsletter from '../components/Newsletter';
-import Footer from '../components/Footer';
-import { useLocation } from 'react-router-dom';
-import { publicRequest } from '../requestMethod';
+import Navbar from "../components/Navbar";
+import Advertisement from "../components/Advertisement";
+import Newsletter from "../components/Newsletter";
+import Footer from "../components/Footer";
+import { useLocation } from "react-router-dom";
+import { publicRequest } from "../requestMethod";
 
 const Container = styled.div``;
 
@@ -21,7 +21,7 @@ const ImgContainer = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 90vh;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 const InfoContainer = styled.div`
@@ -41,40 +41,6 @@ const Price = styled.span`
   font-weight: 100;
   font-size: 40px;
 `;
-
-const FilterContainer = styled.div`
-  width: 50%;
-  margin: 30px 0px;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Filter = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const FilterTitle = styled.span`
-  font-size: 20px;
-  font-weight: 200;
-`;
-
-const FilterColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-  margin: 0px 5px;
-  cursor: pointer;
-`;
-
-const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
-`;
-
-const FilterSizeOption = styled.option``;
-
 const AddContainer = styled.div`
   width: 50%;
   display: flex;
@@ -106,69 +72,74 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 500;
   color: #f8f4f4;
-  &:hover{
-      background-color: #f8f4f4;
-      color: black;
+  &:hover {
+    background-color: #f8f4f4;
+    color: black;
   }
 `;
 
 const SelectedProducts = () => {
-  const Location=useLocation()
-  const id=Location.pathname.split('/')[1]
-  console.log("id undo ?",id);
-  const[product,setproduct]=useState({})
+  const Location = useLocation();
+  const id = Location.pathname.split("/")[2];
+  console.log("id undo ?", id);
+  const category = Location.pathname.split("/")[3];
+  console.log("id pinem undo?", category);
+  const [product, setproduct] = useState([]);
+  const [quantity,setQuantity]=useState(1)
 
-  useEffect(()=>{
-const getProduct = ()=>{
-  try{
-const res=publicRequest.get()
-  }catch(err){}
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get(`/${category}product/find/` + id);
+        setproduct(res.data);
+      } catch (err) {}
+    };
+    getProduct();
+  }, [id]);
+
+  const changeQuantity = (para)=>{
+if(para==="add"){
+ setQuantity(quantity + 1)
+}else{
+  quantity >1 && setQuantity(quantity - 1)
 }
-getProduct()
-  },[id])
-
+  }
 
   return (
     <Container>
-    <Navbar />
-    <Advertisement />
-    <Wrapper>
-      <ImgContainer>
-        <Image src="https://purepng.com/public/uploads/large/purepng.com-jacketclothingjacketfashion-men-dress-wear-cloth-coat-jacket-631522326867zvwfe.png" />
-      </ImgContainer>
-      <InfoContainer>
-        <Title>Mens Winter Jacket</Title>
-        <Desc>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-          venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-          iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-          tristique tortor pretium ut. Curabitur elit justo, consequat id
-          condimentum ac, volutpat ornare.
-        </Desc>
-        <Price>₹ 1950</Price>
-    
-        <AddContainer>
-          <AmountContainer>
-          <span class="material-symbols-outlined">
-add
-</span>
+      <Navbar />
+      <Advertisement />
+      <Wrapper>
+        <ImgContainer>
+          <Image src={product.img} />
+        </ImgContainer>
+        <InfoContainer>
+          <Title>{product.title}</Title>
+          <Desc>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
+            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
+            tristique tortor pretium ut. Curabitur elit justo, consequat id
+            condimentum ac, volutpat ornare.
+          </Desc>
+          <Price>₹ 1950</Price>
 
+          <AddContainer>
+            <AmountContainer>
+              <span class="material-symbols-outlined" style={{cursor:"pointer"}} onClick={()=>changeQuantity("add")}>add</span>
 
-            <Amount>1</Amount>
-          
-            <span class="material-symbols-outlined">
-remove
-</span>
+              <Amount>{quantity}</Amount>
 
-          </AmountContainer>
-          <Button>ADD TO CART</Button>
-        </AddContainer>
-      </InfoContainer>
-    </Wrapper>
-    <Newsletter />
-    <Footer />
-  </Container>
-  )
-}
+              <span class="material-symbols-outlined" style={{cursor:"pointer"}} onClick={()=>changeQuantity("remove")}>remove</span>
+            </AmountContainer>
+            <Button>ADD TO CART</Button>
+          </AddContainer>
+        </InfoContainer>
+      </Wrapper>
+      <Newsletter />
+      <Footer />
+    </Container>
+  );
+};
 
-export default SelectedProducts
+export default SelectedProducts;

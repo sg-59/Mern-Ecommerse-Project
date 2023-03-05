@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card';
 import { womensProducts } from '../Data';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const Container=styled.div`
     display: flex;
@@ -49,6 +50,13 @@ const WomensProducts = () => {
   const[Pricefilter,setpricefilter]=useState('newest')
   const [womenState,womenSetstate]=useState([])
   const [filterwomenState,filterwomenSetstate]=useState([])
+  const [category,setCategory]=useState();
+
+const location=useLocation()
+useEffect(()=>{
+ const specificpoints=location.pathname.split('/')[1]
+  setCategory(specificpoints)
+},[])
 
 
 
@@ -106,7 +114,7 @@ filterwomenSetstate((prev)=>
     let womensproduct=filterwomenState.map((item)=>{
         return (
         <>
-        <Link to={`/selectedproducts/${item._id}`}>
+        <Link  to={`/selectedproducts/${item._id}/${category}`}>
         <Card style={{ width: '18rem',margin:"1.5em",backgroundColor:"#ffffff"}}>
           <Card.Img variant="top" src={item.img} style={{height:'18em'}} />
           <Card.Body>

@@ -17,19 +17,19 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "Men",
+    path: "mens",
     element: <MensProducts />,
   },
   {
-    path: "Women",
+    path: "womens",
     element: <WomensProducts />,
   },
   {
-    path: "Kids",
+    path: "kids",
     element: <KidsProducts />,
   },
   {
-    path: "selectedproducts/:id",
+    path: "selectedproducts/:id/:category",
     element: <SelectedProducts />,
   },
   {

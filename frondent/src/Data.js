@@ -27,17 +27,17 @@ export const sliderItems = [
     {
       id: 1,
       img: "https://images.unsplash.com/photo-1527010154944-f2241763d806?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-      title: "Men",
+      title: "mens",
     },
     {
       id: 2,
       img: "https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      title: "Women",
+      title: "womens",
     },
     {
       id: 3,
       img: "https://images.unsplash.com/photo-1555895417-90b96a0485b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OTl8fGtpZHMlMjBmYXNoaW9ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60",
-      title: "Kids",
+      title: "kids",
     },
   ];
 

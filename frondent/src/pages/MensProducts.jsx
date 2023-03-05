@@ -8,7 +8,8 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { mensProducts } from "../Data";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import SelectedProducts from "./SelectedProducts";
 
 const Container = styled.div`
   display: flex;
@@ -49,6 +50,15 @@ const MensProducts = () => {
   const [sortPrice, setSortprice] = useState("newest");
   const [menspro, setMenpro] = useState([]);
   const [filteredmenpro, setfilteredmenpro] = useState([]);
+  const [category,setCategory]=useState();
+
+  const location=useLocation()
+  useEffect(()=>{
+   const specificpoints=location.pathname.split('/')[1]
+    setCategory(specificpoints)
+  },[])
+
+  
 
   const filterHandle = (e) => {
     const value = e.target.value;
@@ -117,9 +127,11 @@ const MensProducts = () => {
 //   },[sortPrice])
 
   let mensproduct = filteredmenpro.map((item) => {
+
+    
     return (
       <>
-       <Link to={`/selectedproducts/${item._id}`}>
+       <Link  to={`/selectedproducts/${item._id}/${category}`}>
         <Card
           style={{
             width: "18rem",

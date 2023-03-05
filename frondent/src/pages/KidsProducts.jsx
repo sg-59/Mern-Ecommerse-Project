@@ -8,6 +8,8 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { kidsProducts } from '../Data';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const Container=styled.div`
@@ -49,6 +51,15 @@ const [state,setstate]=useState({})
 const [kidstate,kidsSetstate]=useState([])
 const [filterState,setfilterSetstate]=useState([])
 const [priceFilter,setPricefilter]=useState("newest")
+
+const [category,setCategory]=useState();
+
+const location=useLocation()
+useEffect(()=>{
+ const specificpoints=location.pathname.split('/')[1]
+  setCategory(specificpoints)
+},[])
+
  
 console.log("filter price",priceFilter)
 
@@ -105,6 +116,7 @@ setfilterSetstate((prev)=>
     let kidsproduct=filterState.map((item)=>{
         return (
         <>
+        <Link  to={`/selectedproducts/${item._id}/${category}`}>
         <Card style={{ width: '18rem',margin:"1.5em",backgroundColor:"#ffffff"}}>
           <Card.Img variant="top" src={item.img} style={{height:'18em'}} />
           <Card.Body>
@@ -116,6 +128,7 @@ setfilterSetstate((prev)=>
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>
+        </Link>
         </>
         )
     })
