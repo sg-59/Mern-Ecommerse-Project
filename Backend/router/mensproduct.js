@@ -9,7 +9,6 @@ router.post('/',verifyTokenAdmin, async (req,res)=>{
     try{
         const saveditems= await newitem.save();
         res.status(201).json(saveditems)
-        console.log(saveditems);
     }catch(err){
 res.status(500).json(err)
     }

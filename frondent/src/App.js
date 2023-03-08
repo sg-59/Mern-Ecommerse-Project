@@ -7,9 +7,13 @@ import Login from "./pages/Login";
 import SelectedProducts from "./pages/SelectedProducts";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
-import { createBrowserRouter, RouterProvider,redirect } from "react-router-dom";
-  
-const user=true;
+import { Appcontext } from "./createContext";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom"; 
+
+const user = true;
 
 const router = createBrowserRouter([
   {
@@ -37,22 +41,22 @@ const router = createBrowserRouter([
     element: <Cart />,
   },
   {
-  
     path: "login",
-   
-    element:user ? <Home/>:<Login/>
-    
+
+    element: user ? <Home /> : <Login />,
   },
   {
     path: "register",
-    element:user ? <Home/> :<Register />,
+    element: user ? <Home /> : <Register />,
   },
 ]);
 
 function App() {
   return (
     <>
+    <Appcontext.Provider >
       <RouterProvider router={router} />
+      </Appcontext.Provider>
     </>
   );
 }

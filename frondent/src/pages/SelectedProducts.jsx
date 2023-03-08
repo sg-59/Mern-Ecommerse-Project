@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Advertisement from "../components/Advertisement";
@@ -6,6 +6,7 @@ import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { useLocation } from "react-router-dom";
 import { publicRequest } from "../requestMethod";
+import { Appcontext } from "../createContext";
 
 const Container = styled.div``;
 
@@ -83,13 +84,14 @@ const SelectedProducts = () => {
   const id = Location.pathname.split("/")[2];
   console.log("id undo ?", id);
   const category = Location.pathname.split("/")[3];
-  console.log("id pinem undo?", category);
+  console.log("id pinem undo?", category); 
   const [product, setproduct] = useState([]);
-  const [quantity,setQuantity]=useState(1)
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const getProduct = async () => {
-      try {
+      try {  
+      
         const res = await publicRequest.get(`/${category}product/find/` + id);
         setproduct(res.data);
       } catch (err) {}
@@ -97,13 +99,13 @@ const SelectedProducts = () => {
     getProduct();
   }, [id]);
 
-  const changeQuantity = (para)=>{
-if(para==="add"){
- setQuantity(quantity + 1)
-}else{
-  quantity >1 && setQuantity(quantity - 1)
-}
-  }
+  const changeQuantity = (para) => {
+    if (para === "add") {
+      setQuantity(quantity + 1);
+    } else {
+      quantity > 1 && setQuantity(quantity - 1);
+    }
+  };
 
   return (
     <Container>
@@ -116,21 +118,30 @@ if(para==="add"){
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas
+            iusto, consequatur eius id qui tempora accusamus tempore deleniti
+            neque ea iste nobis quas, laborum ipsam fugit quo quae quia
+            repellat? Molestias mollitia commodi sit aut recusandae ex at porro
           </Desc>
           <Price>₹ 1950</Price>
 
           <AddContainer>
             <AmountContainer>
-              <span class="material-symbols-outlined" style={{cursor:"pointer"}} onClick={()=>changeQuantity("add")}>add</span>
-
+              <span
+                class="material-symbols-outlined"
+                style={{ cursor: "pointer" }}
+                onClick={() => changeQuantity("add")}
+              >
+                add
+              </span>
               <Amount>{quantity}</Amount>
-
-              <span class="material-symbols-outlined" style={{cursor:"pointer"}} onClick={()=>changeQuantity("remove")}>remove</span>
+              <span
+                class="material-symbols-outlined"
+                style={{ cursor: "pointer" }}
+                onClick={() => changeQuantity("remove")}
+              >
+                remove
+              </span>
             </AmountContainer>
             <Button>ADD TO CART</Button>
           </AddContainer>

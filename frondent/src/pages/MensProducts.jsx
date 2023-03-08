@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Advertisement from "../components/Advertisement";
 import Newsletter from "../components/Newsletter";
@@ -10,6 +10,7 @@ import { mensProducts } from "../Data";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import SelectedProducts from "./SelectedProducts";
+
 
 const Container = styled.div`
   display: flex;
@@ -57,8 +58,6 @@ const MensProducts = () => {
    const specificpoints=location.pathname.split('/')[1]
     setCategory(specificpoints)
   },[])
-
-  
 
   const filterHandle = (e) => {
     const value = e.target.value;
@@ -108,23 +107,6 @@ const MensProducts = () => {
     }
 
   }, [filter, menspro,sortPrice]);
-
-//   useEffect(()=>{
-// if(sortPrice=="newest"){
-//   setSortprice((prev)=>
-//   [...prev].sort((a,b)=>a.createdAt - b.createdAt)
-//   );
-// }else if(sortPrice=="asc"){
-//   setSortprice((prev)=>
-//   [...prev].sort((a,b)=> a.price - b.price)
-//   );
-// }else if(sortPrice == "desc"){
-//   setSortprice((prev)=>
-//   [...prev].sort((a,b)=> b.price - a.price)
-//   )
-// }
-
-//   },[sortPrice])
 
   let mensproduct = filteredmenpro.map((item) => {
 

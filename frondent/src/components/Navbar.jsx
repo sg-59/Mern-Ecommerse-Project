@@ -1,5 +1,5 @@
 import { Badge, Button } from "react-bootstrap";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -56,6 +56,7 @@ const Menu = styled.div`
 
 const Navbar = () => {
   return (
+
     <Container>
       <Wrapper>
         <Left>
