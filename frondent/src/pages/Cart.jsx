@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Advertisement from '../components/Advertisement'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { useSelector } from 'react-redux'
+import { publicRequest } from '../requestMethod'
 
 
 const Container = styled.div``;
@@ -141,6 +143,12 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const [add,setAdd]=useState()
+  const [remove,setRemove]=useState()
+
+const cart=useSelector(state=>state.cart)
+console.log("cart items",cart);
+
   return (
     <Container>
     <Navbar />
@@ -153,38 +161,43 @@ const Cart = () => {
       </Top>
       <Bottom>
         <Info>
-          <Product>
+          {cart.products.map((li)=>(
+            <>
+              <Product>
             <ProductDetail>
-              <Image src="https://purepng.com/public/uploads/large/purepng.com-jacketclothingjacketfashion-men-dress-wear-cloth-coat-jacket-631522326867zvwfe.png" />
+              <Image src={li.img} />
               <Details>
                 <ProductName>
-                  <b>Product:</b> JESSIE THUNDER SHOES
+                  <b>Product:</b> {li.title}
                 </ProductName>
                 <ProductId>
-                  <b>ID:</b> 93813718293
+                  <b>ID:</b> {li.id}
                 </ProductId>
-                <ProductColor color="black" />
+                <ProductColor color={li.color} />
                 <ProductSize>
-                  <b>Size:</b> 37.5
+                  <b>Size:</b> {li.size}
                 </ProductSize>
               </Details>
             </ProductDetail>
             <PriceDetail>
               <ProductAmountContainer>
-              <span class="material-symbols-outlined">add</span>
-              <ProductAmount>2</ProductAmount>
+              <span class="material-symbols-outlined" onClick={()=>setAdd(add+1)}>add</span>
+              <ProductAmount>{li.quantity}</ProductAmount>
               <span class="material-symbols-outlined">remove</span>
               </ProductAmountContainer>
-              <ProductPrice>₹ 30</ProductPrice>
+              <ProductPrice>₹ {li.price*li.quantity}</ProductPrice>
             </PriceDetail>
           </Product>
           <Hr />
+            </>
+          ))}
+        
         </Info>
         <Summary>
           <SummaryTitle>ORDER SUMMARY</SummaryTitle>
           <SummaryItem>
             <SummaryItemText>Subtotal</SummaryItemText>
-            <SummaryItemPrice>₹ 80</SummaryItemPrice>
+            <SummaryItemPrice>₹ {cart.total}</SummaryItemPrice>
           </SummaryItem>
           <SummaryItem>
             <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -196,7 +209,7 @@ const Cart = () => {
           </SummaryItem>
           <SummaryItem type="total">
             <SummaryItemText>Total</SummaryItemText>
-            <SummaryItemPrice>₹ 80</SummaryItemPrice>
+            <SummaryItemPrice>₹ {cart.total}</SummaryItemPrice>
           </SummaryItem>
           <Button>CHECKOUT NOW</Button>
         </Summary>

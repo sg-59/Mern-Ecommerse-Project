@@ -11,7 +11,6 @@ import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import SelectedProducts from "./SelectedProducts";
 
-
 const Container = styled.div`
   display: flex;
   margin: 2em;
@@ -51,13 +50,13 @@ const MensProducts = () => {
   const [sortPrice, setSortprice] = useState("newest");
   const [menspro, setMenpro] = useState([]);
   const [filteredmenpro, setfilteredmenpro] = useState([]);
-  const [category,setCategory]=useState();
+  const [category, setCategory] = useState();
 
-  const location=useLocation()
-  useEffect(()=>{
-   const specificpoints=location.pathname.split('/')[1]
-    setCategory(specificpoints)
-  },[])
+  const location = useLocation();
+  useEffect(() => {
+    const specificpoints = location.pathname.split("/")[1];
+    setCategory(specificpoints);
+  }, []);
 
   const filterHandle = (e) => {
     const value = e.target.value;
@@ -92,45 +91,38 @@ const MensProducts = () => {
         )
       )
     );
-    if(sortPrice=="newest"){
-      setfilteredmenpro((prev)=>
-      [...prev].sort((a,b)=>a.createdAt - b.createdAt)
+    if (sortPrice == "newest") {
+      setfilteredmenpro((prev) =>
+        [...prev].sort((a, b) => a.createdAt - b.createdAt)
       );
-    }else if(sortPrice=="asc"){
-      setfilteredmenpro((prev)=>
-      [...prev].sort((a,b)=> a.price - b.price)
-      );
-    }else if(sortPrice == "desc"){
-      setfilteredmenpro((prev)=>
-      [...prev].sort((a,b)=> b.price - a.price)
-      )
+    } else if (sortPrice == "asc") {
+      setfilteredmenpro((prev) => [...prev].sort((a, b) => a.price - b.price));
+    } else if (sortPrice == "desc") {
+      setfilteredmenpro((prev) => [...prev].sort((a, b) => b.price - a.price));
     }
-
-  }, [filter, menspro,sortPrice]);
+  }, [filter, menspro, sortPrice]);
 
   let mensproduct = filteredmenpro.map((item) => {
-
-    
     return (
       <>
-       <Link  to={`/selectedproducts/${item._id}/${category}`}>
-        <Card
-          style={{
-            width: "18rem",
-            margin: "1.5em",
-            backgroundColor: "#ffffff",
-          }}
-        >
-          <Card.Img variant="top" src={item.img} style={{ height: "14em" }} />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
+        <Link to={`/selectedproducts/${item._id}/${category}`}>
+          <Card
+            style={{
+              width: "18rem",
+              margin: "1.5em",
+              backgroundColor: "#ffffff",
+            }}
+          >
+            <Card.Img variant="top" src={item.img} style={{ height: "14em" }} />
+            <Card.Body>
+              <Card.Title>Card Title</Card.Title>
+              <Card.Text>
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </Card.Text>
+              <Button variant="primary">Go somewhere</Button>
+            </Card.Body>
+          </Card>
         </Link>
       </>
     );

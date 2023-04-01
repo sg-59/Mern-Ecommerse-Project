@@ -1,12 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Advertisement from "../components/Advertisement";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { useLocation } from "react-router-dom";
-import { publicRequest } from "../requestMethod";
-import { Appcontext } from "../createContext";
+import { publicRequest, userRequest } from "../requestMethod";
+import { useDispatch } from "react-redux";
+import { addtoCart } from "../Redux/cartRedux";
+import { cart } from "../Redux/apiCall";
+import axios from "axios";
+
 
 const Container = styled.div``;
 
@@ -78,6 +82,13 @@ const Button = styled.button`
     color: black;
   }
 `;
+const Colorscheme=styled.div`
+  display: flex;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: ${(props) => props.color === "total" && "24px"};
+`
 
 const SelectedProducts = () => {
   const Location = useLocation();
@@ -87,6 +98,7 @@ const SelectedProducts = () => {
   console.log("id pinem undo?", category); 
   const [product, setproduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const dispatch=useDispatch()
 
   useEffect(() => {
     const getProduct = async () => {
@@ -106,6 +118,14 @@ const SelectedProducts = () => {
       quantity > 1 && setQuantity(quantity - 1);
     }
   };
+
+  console.log("ethan product",product);
+  const addtoCartDisplay =async (e)=>{
+e.preventDefault()
+dispatch(addtoCart({...product,quantity}))
+
+const res=await userRequest.get('/')
+  }
 
   return (
     <Container>
@@ -142,8 +162,10 @@ const SelectedProducts = () => {
               >
                 remove
               </span>
+              
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={addtoCartDisplay}>ADD TO CART</Button>
+            <Colorscheme />
           </AddContainer>
         </InfoContainer>
       </Wrapper>

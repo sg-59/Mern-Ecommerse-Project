@@ -7,13 +7,11 @@ import Login from "./pages/Login";
 import SelectedProducts from "./pages/SelectedProducts";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
-import { Appcontext } from "./createContext";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom"; 
-
-const user = true;
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store, persistor } from "./Redux/cartStore";
+import { PersistGate } from "redux-persist/integration/react";
+import { loginSuccess } from "./Redux/userRedux";
 
 const router = createBrowserRouter([
   {
@@ -43,21 +41,21 @@ const router = createBrowserRouter([
   {
     path: "login",
 
-    element: user ? <Home /> : <Login />,
+    element: loginSuccess ? <Home /> : <Login />,
   },
   {
     path: "register",
-    element: user ? <Home /> : <Register />,
+    element: <Register />,
   },
 ]);
 
 function App() {
   return (
-    <>
-    <Appcontext.Provider >
-      <RouterProvider router={router} />
-      </Appcontext.Provider>
-    </>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
   );
 }
 

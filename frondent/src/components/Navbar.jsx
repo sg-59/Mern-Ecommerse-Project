@@ -1,6 +1,8 @@
-import { Badge, Button } from "react-bootstrap";
-import React, { useState } from "react";
+import { Badge} from "react-bootstrap";
+import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -55,6 +57,8 @@ const Menu = styled.div`
 `;
 
 const Navbar = () => {
+const quantity=useSelector(state=>state.cart.quantity)
+
   return (
 
     <Container>
@@ -74,11 +78,12 @@ const Navbar = () => {
         <Center>Shopping-Cart</Center>
         <Right>
           <Menu>
+            <Link to={'/cart'}>
             <Badge
               className="bg-transparent text-black"
               style={{ fontSize: "14px" }}
             >
-              99
+              {quantity}
               <span
                 class="material-symbols-outlined"
                 style={{ fontSize: "1.8em" }}
@@ -86,6 +91,7 @@ const Navbar = () => {
                 garden_cart{" "}
               </span>
             </Badge>
+            </Link>
           </Menu>
           <Menu>Register</Menu>
           <Menu>Sign-in</Menu>

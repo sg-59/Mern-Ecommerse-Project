@@ -26,7 +26,8 @@ const Desc = styled.div`
 const InputContainer = styled.div`
   width: 50%;
   height: 40px;
-  background-color: white;
+  background-color:transparent;
+  outline: none;
   display: flex;
   justify-content: space-between;
   border: 1px solid lightgray;
@@ -46,6 +47,7 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   border-radius: 9em;
+  margin-left: 9px;
 `;
 
 const Newsletter = () => {

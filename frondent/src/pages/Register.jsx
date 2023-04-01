@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios';
 
 
 const Container = styled.div`
@@ -56,22 +57,41 @@ const Button = styled.button`
 
 
 const Register = () => {
+const [name,setName]=useState('')
+const [lname,setLname]=useState('')
+const [username,setUsername]=useState('')
+const [email,setEmail]=useState('')
+const [password,setPassword]=useState('')
+const [cpassword,setCpassword]=useState('')
+
+const Info={
+  username,
+  email,
+  password,
+}
+
+const display =async (e)=>{
+  e.preventDefault();
+  const res=await axios.post("http://localhost:5000/api/auth/signup",Info)
+  
+}
+
   return (
     <Container>
     <Wrapper>
       <Title>CREATE AN ACCOUNT</Title>
       <Form>
-        <Input placeholder="name" />
-        <Input placeholder="last name" />
-        <Input placeholder="username" />
-        <Input placeholder="email" />
-        <Input placeholder="password" />
-        <Input placeholder="confirm password" />
+        <Input type='text' placeholder="name" onChange={(e)=>setName(e.target.value)} />
+        <Input type='text' placeholder="last name" onChange={(e)=>setLname(e.target.value)}  />
+        <Input type='text' placeholder="username" onChange={(e)=>setUsername(e.target.value)}  />
+        <Input type='email' placeholder="email" onChange={(e)=>setEmail(e.target.value)}  />
+        <Input type='password' placeholder="password" onChange={(e)=>setPassword(e.target.value)} />
+        <Input type='password' placeholder="confirm password" onChange={(e)=>setCpassword(e.target.value)}  />
         <Agreement>
           By creating an account, I consent to the processing of my personal
           data in accordance with the <b>PRIVACY POLICY</b>
         </Agreement>
-        <Button>CREATE</Button>
+        <Button onClick={display}>CREATE</Button>
       </Form>
     </Wrapper>
   </Container>
