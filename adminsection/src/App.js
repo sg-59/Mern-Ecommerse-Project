@@ -1,14 +1,19 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { createBrowserRouter,RouterProvider } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Alluser from './Components/Alluser';
 function App() {
-  return (
-    <div className="App">
-      <>
-      <Navbar />
-<Alluser/></>
 
-    </div>
+const router=createBrowserRouter([
+  {
+    path:"/",
+    element:<Alluser/>
+  }
+])
+
+  return (
+    <RouterProvider router={router}/>
   );
 }
 

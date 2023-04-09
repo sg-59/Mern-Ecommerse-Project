@@ -1,44 +1,50 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import './admin.css'
-import { userRequest,publicRequest } from '../requestMethod'
-import axios from 'axios'
+import { Table } from 'react-bootstrap'
+import { getUsersInfo } from '../Redux/Apicall'
+import {useDispatch, useSelector} from 'react-redux'
 
 
 
 const Alluser = () => {
-const [fillInfo,setFullinfo]=useState([])
+  const [state,setState]=useState([]);
+const dispatch=useDispatch();
 useEffect(()=>{
-  const getusers =async ()=>{
-    const res=await publicRequest.get('/user')
-    setFullinfo(res.data)
-  }
-  getusers()
+getUsersInfo(dispatch)
+},[dispatch])
 
-},[])
+const Display =async ()=>{
+  const res=await useSelector(state=>state.users.usersInfo)
+setState(res)
+};
+Display();
 
-console.log('***',fillInfo);
   return (
     <div>
-      <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row" className='rows'>1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-      </tbody>
-    </table>
-
+    
+    <Table striped bordered hover>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Password</th>
+      </tr>
+    </thead>
+    {state.map((item)=>(
+        <>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>{item.username}</td>
+        <td>{item.email}</td>
+        <td>{item.password}</td>
+      </tr>
+    </tbody>
+    </>
+      ))}
+  </Table>
+ 
+  
 
     </div>
   )
