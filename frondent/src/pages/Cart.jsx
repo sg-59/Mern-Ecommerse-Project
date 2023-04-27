@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import Advertisement from '../components/Advertisement'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import { useSelector } from 'react-redux'
-import { publicRequest } from '../requestMethod'
-
+import React, { useEffect, useMemo, useState } from "react";
+import styled from "styled-components";
+import Advertisement from "../components/Advertisement";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { publicRequest, userRequest } from "../requestMethod";
+import { Link } from "react-router-dom";
+import { Remove } from "../Redux/apiCall";
+import { removedItem } from "../Redux/cartRedux";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  height: auto;
 `;
 
 const Title = styled.h1`
@@ -32,10 +35,8 @@ const TopButton = styled.button`
   border: ${(props) => props.type === "filled" && "none"};
   background-color: ${(props) =>
     props.type === "filled" ? "green" : " #488A99"};
-  color: ${(props) => props.type === "filled" ? "white" :"white"};
+  color: ${(props) => (props.type === "filled" ? "white" : "white")};
 `;
-
-
 
 const Bottom = styled.div`
   display: flex;
@@ -43,11 +44,15 @@ const Bottom = styled.div`
 `;
 
 const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+
   flex: 3;
 `;
 
 const Product = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 `;
 
@@ -86,12 +91,6 @@ const PriceDetail = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
 `;
 
 const ProductAmount = styled.div`
@@ -137,87 +136,143 @@ const SummaryItemPrice = styled.span``;
 const Button = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: #488A99;
+  background-color: #488a99;
   color: white;
   font-weight: 600;
 `;
 
 const Cart = () => {
-  const [add,setAdd]=useState()
-  const [remove,setRemove]=useState()
+  const [state, setstate] = useState([]);
+  const [Total, setTotal] = useState([]);
+  const [Amount, setAmount] = useState();
+  const dispatch = useDispatch();
 
-const cart=useSelector(state=>state.cart)
-console.log("cart items",cart);
+  useEffect(() => {
+    if (Total) {
+      const amount = Total.reduce(sum, 0);
+
+      function sum(a, b) {
+        return a + b;
+      }
+
+      sum();
+
+      console.log("amount", amount);
+      setAmount(amount);
+    }
+  }, [Total]);
+
+  console.log("Total vano?", Total);
+  const newa = useSelector((state) => state.cart.price);
+  console.log("price ", newa);
+
+  useEffect(() => {
+    const display = async () => {
+      try {
+        const res = await publicRequest.get("/cart");
+        console.log("****", res.data);
+        setstate(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    display();
+  }, []);
+
+  const newArray = state;
+
+  console.log("?", newArray);
+
+  const cart = useSelector((state) => state.cart);
+  console.log("cart items", cart);
+  useEffect(() => {
+    const a = state.map((li) => {
+      return li.price * li.quantity;
+    });
+
+    console.log("success of total", a);
+    setTotal(a);
+  }, [state]);
+
+  const Removeitem = (id) => {
+    console.log("verify", id);
+    Remove(id);
+    dispatch(removedItem(id));
+  };
 
   return (
     <Container>
-    <Navbar />
-    <Advertisement />
-    <Wrapper>
-      <Title>YOUR CART</Title>
-      <Top>
-        <TopButton>CONTINUE SHOPPING</TopButton>
-        <TopButton type="filled">CHECKOUT NOW</TopButton>
-      </Top>
-      <Bottom>
-        <Info>
-          {cart.products.map((li)=>(
-            <>
-              <Product>
-            <ProductDetail>
-              <Image src={li.img} />
-              <Details>
-                <ProductName>
-                  <b>Product:</b> {li.title}
-                </ProductName>
-                <ProductId>
-                  <b>ID:</b> {li.id}
-                </ProductId>
-                <ProductColor color={li.color} />
-                <ProductSize>
-                  <b>Size:</b> {li.size}
-                </ProductSize>
-              </Details>
-            </ProductDetail>
-            <PriceDetail>
-              <ProductAmountContainer>
-              <span class="material-symbols-outlined" onClick={()=>setAdd(add+1)}>add</span>
-              <ProductAmount>{li.quantity}</ProductAmount>
-              <span class="material-symbols-outlined">remove</span>
-              </ProductAmountContainer>
-              <ProductPrice>₹ {li.price*li.quantity}</ProductPrice>
-            </PriceDetail>
-          </Product>
-          <Hr />
-            </>
-          ))}
-        
-        </Info>
-        <Summary>
-          <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-          <SummaryItem>
-            <SummaryItemText>Subtotal</SummaryItemText>
-            <SummaryItemPrice>₹ {cart.total}</SummaryItemPrice>
-          </SummaryItem>
-          <SummaryItem>
-            <SummaryItemText>Estimated Shipping</SummaryItemText>
-            <SummaryItemPrice>₹ 5.90</SummaryItemPrice>
-          </SummaryItem>
-          <SummaryItem>
-            <SummaryItemText>Shipping Discount</SummaryItemText>
-            <SummaryItemPrice>₹ -5.90</SummaryItemPrice>
-          </SummaryItem>
-          <SummaryItem type="total">
-            <SummaryItemText>Total</SummaryItemText>
-            <SummaryItemPrice>₹ {cart.total}</SummaryItemPrice>
-          </SummaryItem>
-          <Button>CHECKOUT NOW</Button>
-        </Summary>
-      </Bottom>
-    </Wrapper>
-    <Footer />
-  </Container>
-  )
-}
+      <Navbar />
+      <Advertisement />
+      <Wrapper>
+        <Title>YOUR CART</Title>
+        <Top>
+          <TopButton>Cart Remove</TopButton>
+          <Link to={"/checkout"}>
+            <TopButton type="filled">CHECKOUT NOW</TopButton>
+          </Link>
+        </Top>
+        <Bottom>
+          <Info>
+            {state.map((li) => (
+              <>
+                <Product>
+                  <ProductDetail>
+                    <Image src={li.img} />
+                    <Details>
+                      <ProductName>
+                        <b>Product:</b> {li.title}
+                      </ProductName>
+                      <ProductId>
+                        <b>ID:</b> {li._id}
+                      </ProductId>
+                      <ProductColor color={li.color} />
+                      <ProductSize>
+                        <b>Size:</b> {li.size}
+                        <br />
+                        <b>Qty:</b> {li.quantity}
+                        <br />
+                        <br />
+                        <br />
+                        <Button onClick={() => Removeitem(li._id)}>
+                          Remove
+                        </Button>
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductPrice>{li.quantity * li.price}</ProductPrice>
+                  </PriceDetail>
+                </Product>
+                <Hr />
+              </>
+            ))}
+          </Info>
+          <Summary>
+            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+            <SummaryItem>
+              <SummaryItemText>Subtotal</SummaryItemText>
+              <SummaryItemPrice>₹ {Amount}</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Estimated Shipping</SummaryItemText>
+              <SummaryItemPrice>₹ 5.90</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Shipping Discount</SummaryItemText>
+              <SummaryItemPrice>₹ -5.90</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem type="total">
+              <SummaryItemText>Total</SummaryItemText>
+              <SummaryItemPrice>₹ {Amount}</SummaryItemPrice>
+            </SummaryItem>
+            <Button>CHECKOUT NOW</Button>
+          </Summary>
+        </Bottom>
+      </Wrapper>
+      <Footer />
+    </Container>
+  );
+};
 
-export default Cart
+export default Cart;

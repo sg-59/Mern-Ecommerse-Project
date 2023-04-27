@@ -57,7 +57,17 @@ const Menu = styled.div`
 `;
 
 const Navbar = () => {
+  
 const quantity=useSelector(state=>state.cart.quantity)
+const name=  useSelector(state=>state.user.currentuser.username) 
+console.log('name?',name);
+
+console.log('quqntity where',quantity);
+  
+const Logout = (e)=>{ 
+  e.preventDefault()
+localStorage.clear()
+}
 
   return (
 
@@ -93,8 +103,10 @@ const quantity=useSelector(state=>state.cart.quantity)
             </Badge>
             </Link>
           </Menu>
+          <Menu>{name}</Menu>
           <Menu>Register</Menu>
-          <Menu>Sign-in</Menu>
+         {!name && <Menu>Sign-in</Menu>}
+          <Menu onClick={Logout}>LOGOUT</Menu>
         </Right>
       </Wrapper>
     </Container>

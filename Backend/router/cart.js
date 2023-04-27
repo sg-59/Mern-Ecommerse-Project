@@ -6,18 +6,18 @@ const {
   verifyToken,
 } = require("./verifyToken");
 
-router.post("/", verifyToken, async (req, res) => {
-  console.log(req.body);
-  const newCart = new cart(req.body);
-
+router.post("/",async(req,res) => {
+  console.log("req.body ?",req.body);
+  const newCart = new cart(req.body)
+  
   try {
     const savedCart = await newCart.save();
     res.status(201).json(savedCart);
-    console.log(savedCart);
+    console.log("savedcart",savedCart);
   } catch (err) {
     res.status(500).json(err);
   }
-});
+}); 
 
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
@@ -35,7 +35,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     await cart.findByIdAndDelete(req.params.id);
     res.status(200).json("cart deleted");
@@ -53,7 +53,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-router.get("/", verifyTokenAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     let allcart = await cart.find();
     res.status(200).json(allcart);
@@ -62,4 +62,4 @@ router.get("/", verifyTokenAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router; 

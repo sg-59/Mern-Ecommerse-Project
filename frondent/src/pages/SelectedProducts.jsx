@@ -6,11 +6,9 @@ import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { useLocation } from "react-router-dom";
 import { publicRequest, userRequest } from "../requestMethod";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addtoCart } from "../Redux/cartRedux";
 import { cart } from "../Redux/apiCall";
-import axios from "axios";
-
 
 const Container = styled.div``;
 
@@ -82,34 +80,43 @@ const Button = styled.button`
     color: black;
   }
 `;
-const Colorscheme=styled.div`
+const Colorscheme = styled.div`
   display: flex;
   width: 20px;
   height: 20px;
   border-radius: 10px;
   background-color: ${(props) => props.color === "total" && "24px"};
-`
-
+`;
 const SelectedProducts = () => {
   const Location = useLocation();
   const id = Location.pathname.split("/")[2];
   console.log("id undo ?", id);
   const category = Location.pathname.split("/")[3];
-  console.log("id pinem undo?", category); 
+  console.log("id pinem undo?", category);
   const [product, setproduct] = useState([]);
   const [quantity, setQuantity] = useState(1);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
-      try {  
-      
+      try {
         const res = await publicRequest.get(`/${category}product/find/` + id);
         setproduct(res.data);
       } catch (err) {}
     };
     getProduct();
   }, [id]);
+
+  const ids = product._id;
+  const price = product.price;
+  const title = product.title;
+  const desc = product.desc;
+  const categories = product.categories;
+  const size = product.size;
+  const color = product.color;
+  const img = product.img;
+
+  const userId = useSelector((state) => state.user.currentuser._id);
 
   const changeQuantity = (para) => {
     if (para === "add") {
@@ -119,13 +126,21 @@ const SelectedProducts = () => {
     }
   };
 
-  console.log("ethan product",product);
-  const addtoCartDisplay =async (e)=>{
-e.preventDefault()
-dispatch(addtoCart({...product,quantity}))
-
-const res=await userRequest.get('/')
-  }
+  const addtoCartDisplay = async (e) => {
+    e.preventDefault();
+    cart(dispatch, {
+      userId,
+      ids,
+      title,
+      desc,
+      img,
+      categories,
+      size,
+      color,
+      price,
+      quantity,
+    });
+  };
 
   return (
     <Container>
@@ -162,7 +177,6 @@ const res=await userRequest.get('/')
               >
                 remove
               </span>
-              
             </AmountContainer>
             <Button onClick={addtoCartDisplay}>ADD TO CART</Button>
             <Colorscheme />

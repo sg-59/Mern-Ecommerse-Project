@@ -9,13 +9,17 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { loginSuccess } from "./Redux/userRedux";
+import Checkout from "./pages/Checkout";
+import { useSelector } from "react-redux";
 
 
 function App() {
+  
+ const login=useSelector((state)=>state.user.currentuser)
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element:login ? <Home /> :<Login/>
     },
     {
       path: "mens",
@@ -35,16 +39,19 @@ function App() {
     },
     {
       path: "cart",
-      element: <Cart />,
+      element: <Cart /> 
     },
-    {
-      path: "login",
-  
-      element: loginSuccess ? <Home /> : <Login />,
-    },
+    // {
+    //   path: "login",
+    //   element:  <Login />,
+    // },
     {
       path: "register",
       element: <Register />,
+    },
+    {
+      path: "checkout",
+      element: <Checkout />,
     },
   ]);
       
