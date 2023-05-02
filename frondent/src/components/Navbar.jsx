@@ -1,8 +1,9 @@
 import { Badge} from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../Redux/userRedux";
 
 const Container = styled.div`
   height: 60px;
@@ -63,10 +64,11 @@ const name=  useSelector(state=>state.user.currentuser.username)
 console.log('name?',name);
 
 console.log('quqntity where',quantity);
+const dispatch=useDispatch()
   
 const Logout = (e)=>{ 
-  e.preventDefault()
-localStorage.clear()
+  e.preventDefault();
+dispatch(logoutUser())
 }
 
   return (
@@ -104,6 +106,7 @@ localStorage.clear()
             </Link>
           </Menu>
           <Menu>{name}</Menu>
+          <Link to={'/myorderlist'}> <Menu>My order list</Menu></Link>
           <Menu>Register</Menu>
          {!name && <Menu>Sign-in</Menu>}
           <Menu onClick={Logout}>LOGOUT</Menu>

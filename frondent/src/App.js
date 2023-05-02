@@ -7,14 +7,15 @@ import Login from "./pages/Login";
 import SelectedProducts from "./pages/SelectedProducts";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider,Link } from "react-router-dom";
 import { loginSuccess } from "./Redux/userRedux";
 import Checkout from "./pages/Checkout";
 import { useSelector } from "react-redux";
+import OrderSuccessfull from "./pages/OrderSuccessfull";
+import MyorderList from "./pages/MyorderList";
 
 
 function App() {
-  
  const login=useSelector((state)=>state.user.currentuser)
   const router = createBrowserRouter([
     {
@@ -52,6 +53,14 @@ function App() {
     {
       path: "checkout",
       element: <Checkout />,
+    },
+    {
+      path: "ordersuccess",
+      element: <OrderSuccessfull />,
+    },
+    {
+      path: "myorderlist",
+      element: <MyorderList />,
     },
   ]);
       

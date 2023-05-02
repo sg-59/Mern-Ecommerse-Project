@@ -62,4 +62,13 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.delete('/',async(req,res)=>{
+  try{
+await cart.deleteMany();
+res.status(200).json('fullcart deleted')
+  }catch(err){
+    res.status(500).json(err)
+  }
+})
+
 module.exports = router; 

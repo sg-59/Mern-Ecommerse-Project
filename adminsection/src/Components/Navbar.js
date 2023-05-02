@@ -1,6 +1,7 @@
 import {Badge} from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 // import {Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -66,8 +67,8 @@ const Navbar = () => {
             </Badge>
             {/* </Link> */}
           </Menu>
-          <Menu>Register</Menu>
-          <Menu>Sign-in</Menu>
+          <Link to={'/'}> <Menu>All User</Menu></Link>
+      <Link to={'/allorder'}> <Menu>All orders</Menu></Link>  
         </Right>
       </Wrapper>
     </Container>

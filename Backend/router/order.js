@@ -3,17 +3,16 @@ const order= require('../models/order');
 const { verifyTokenAdmin, verifyTokenAndAuthorization,verifyToken } = require('./verifyToken');
 
 
-router.post('/',verifyToken, async (req,res)=>{
+router.post('/', async(req,res)=>{
     const neworder=new order(req.body)
-
     try{
-        const savedorder= await neworder.save();
-        res.status(201).json(savedorder)
-        console.log(savedCart);
+            const savedorder= await neworder.save();
+            res.status(201).json(savedorder)
+            console.log("enathavam", savedorder)
     }catch(err){
 res.status(500).json(err)
     }
-})
+});
 
 router.put("/:id",verifyTokenAdmin,async(req,res)=>{
     try{
@@ -28,7 +27,7 @@ res.status(500).json(err)
     }
 })
 
-router.delete('/:id',verifyTokenAdmin,async (req,res)=>{
+router.delete('/:id',async (req,res)=>{
     try{
         await order.findByIdAndDelete(req.params.id)
         res.status(200).json("order deleted")
@@ -47,7 +46,7 @@ router.get("/find/:userId",verifyTokenAndAuthorization, async(req,res)=>{
     }
  })
 
- router.get('/',verifyTokenAdmin, async(req,res)=>{
+ router.get('/', async(req,res)=>{
 try{
 let allorder=await order.find()
 res.status(200).json(allorder)

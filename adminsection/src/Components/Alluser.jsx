@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { getUsersInfo } from '../Redux/Apicall'
 import {useDispatch, useSelector} from 'react-redux'
-
+import Navbar from './Navbar'
 
 
 const Alluser = () => {
@@ -20,7 +20,7 @@ Display();
 
   return (
     <div>
-    
+    <Navbar></Navbar>
     <Table striped bordered hover>
     <thead>
       <tr>

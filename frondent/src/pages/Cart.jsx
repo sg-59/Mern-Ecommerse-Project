@@ -6,8 +6,8 @@ import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { publicRequest, userRequest } from "../requestMethod";
 import { Link } from "react-router-dom";
-import { Remove } from "../Redux/apiCall";
-import { removedItem } from "../Redux/cartRedux";
+import { Remove, removeCartitem } from "../Redux/apiCall";
+import { removedAllCart, removedItem } from "../Redux/cartRedux";
 
 const Container = styled.div``;
 
@@ -185,6 +185,7 @@ const Cart = () => {
 
   const cart = useSelector((state) => state.cart);
   console.log("cart items", cart);
+  console.log("cart items 1",cart.products);
   useEffect(() => {
     const a = state.map((li) => {
       return li.price * li.quantity;
@@ -199,6 +200,11 @@ const Cart = () => {
     Remove(id);
     dispatch(removedItem(id));
   };
+const removecart = (e)=>{
+  e.preventDefault();
+  removeCartitem(dispatch)
+};
+
 
   return (
     <Container>
@@ -207,14 +213,14 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR CART</Title>
         <Top>
-          <TopButton>Cart Remove</TopButton>
+          <TopButton onClick={removecart}>Cart Remove</TopButton>
           <Link to={"/checkout"}>
             <TopButton type="filled">CHECKOUT NOW</TopButton>
           </Link>
         </Top>
         <Bottom>
           <Info>
-            {state.map((li) => (
+            {cart.products.map((li) => (
               <>
                 <Product>
                   <ProductDetail>

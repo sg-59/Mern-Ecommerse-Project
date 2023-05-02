@@ -1,5 +1,6 @@
 import { publicRequest, userRequest } from "../requestMethod";
-import { addtoCart } from "./cartRedux";
+import { addtoCart, removedAllCart } from "./cartRedux";
+import { addtoOrders, removeOrder } from "./orderRedux";
 import { loginFailure, loginStart, loginSuccess } from "./userRedux";
 
 export const login = async (dispatch, user) => {
@@ -34,5 +35,35 @@ export const Remove = async (id)=>{
 const value=await publicRequest.delete(`/cart/${id}`)
   }catch(err){
 
+  }
+}
+
+export const Orders=async (dispatch,orderDetails)=>{
+  console.log('order Details',orderDetails);
+  try{
+const res=await publicRequest.post('/order',orderDetails)
+console.log('evideyenkilum ethyo order',res);
+dispatch(addtoOrders(res.data))
+  }catch(err){
+    console.log('error  ok',err);
+  }
+}
+
+export const removeCartitem=async(dispatch)=>{
+
+  try{
+const res=await publicRequest.delete('/cart')
+dispatch(removedAllCart())
+  }catch(err){
+
+  }
+}
+
+export const removeOrders=async(dispatch,id)=>{
+  try{
+const res=await publicRequest.delete(`/order/${id}`)
+dispatch(removeOrder(id))
+  }catch(err){
+console.log(err);
   }
 }

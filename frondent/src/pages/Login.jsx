@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import { login } from '../Redux/apiCall';
+import {Link} from 'react-router-dom'
 
 const Container = styled.div`
   width: 100vw;
@@ -47,7 +48,7 @@ const Button = styled.button`
   margin-bottom: 10px;
 `;
 
-const Link = styled.a`
+const Links = styled.a`
   margin: 5px 0px;
   font-size: 12px;
   text-decoration: none;
@@ -72,7 +73,7 @@ login(dispatch,{username,password})
         <Input placeholder="username" onChange={(e)=>setName(e.target.value)} />
         <Input placeholder="password" type={password} onChange={(e)=>setPassword(e.target.value)} />
         <Button onClick={handleBar}>LOGIN</Button>
-        <Link>CREATE A NEW ACCOUNT</Link>
+     <Link to={'/register'}><Links>CREATE A NEW ACCOUNT</Links></Link>
       </Form>
     </Wrapper>
   </Container>

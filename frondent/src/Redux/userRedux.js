@@ -19,9 +19,12 @@ reducers:{
    loginFailure:(state)=>{
     state.isFetching=false
     state.isError=true
+   },
+   logoutUser:(state)=>{
+    state.currentuser=null
    }
 }
 })
 
-export const {loginStart ,loginSuccess,loginFailure} = user.actions
+export const {loginStart ,loginSuccess,loginFailure,logoutUser} = user.actions
 export default user.reducer
