@@ -2,6 +2,9 @@ import {Badge} from "react-bootstrap";
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutwithuser } from "../Redux/UserRedux";
+
 // import {Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -41,34 +44,30 @@ const Menu = styled.div`
 `;
 
 const Navbar = () => {
+  const dispatch=useDispatch()
 
+
+const name=useSelector((state)=>state.userInfo.name)
+
+console.log('//////',name);
+
+const Logout = (e)=>{
+  e.preventDefault();
+  dispatch(logoutwithuser())
+}
   return (
 
     <Container>
       <Wrapper>
         <Left>
-      <Alluser>All-User</Alluser>
+      <Alluser>{name}</Alluser>
         </Left>
         <Center>Admin-Section</Center>
         <Right>
-          <Menu>
-            {/* <Link to={'/cart'}> */}
-            <Badge
-              className="bg-transparent text-black"
-              style={{ fontSize: "14px" }}
-            >
-              99
-              <span
-                class="material-symbols-outlined"
-                style={{ fontSize: "1.8em" }}
-              >
-                garden_cart{" "}
-              </span>
-            </Badge>
-            {/* </Link> */}
-          </Menu>
           <Link to={'/'}> <Menu>All User</Menu></Link>
       <Link to={'/allorder'}> <Menu>All orders</Menu></Link>  
+      <Link to={'/products'}> <Menu>Products</Menu></Link>  
+      <Menu onClick={Logout}>Logout</Menu>
         </Right>
       </Wrapper>
     </Container>

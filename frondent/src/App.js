@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import SelectedProducts from "./pages/SelectedProducts";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
-import { createBrowserRouter, RouterProvider,Link } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { loginSuccess } from "./Redux/userRedux";
 import Checkout from "./pages/Checkout";
 import { useSelector } from "react-redux";

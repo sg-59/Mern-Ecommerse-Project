@@ -1,6 +1,8 @@
 import { publicRequest } from "../requestMethod"
 import { displayOrder } from "./AllorderRedux"
 import { getAlluserfailure, getAlluserstart, getAllusersuccess } from "./AlluserRedux"
+import { kidsTotalitems } from "./Kidsproduct"
+import { loginwithuser } from "./UserRedux"
 
 export const getUsersInfo=async(dispatch)=>{
     dispatch(getAlluserstart())
@@ -22,3 +24,22 @@ console.log("order ?",res.data);
         console.log('err confirm ',err);
     }
 }
+ export const kidsproductsDisplay =async (dispatch,id)=>{
+    try{
+const res=await publicRequest.get(`/kidsproduct/find/${id}`)
+console.log('correct kids product',res.data);
+dispatch(kidsTotalitems(res.data))
+    }catch(err){
+        console.log(err);
+    }
+ }
+
+ export const loginform=async (dispatch,user)=>{
+    try{
+const res=await publicRequest.post('/auth/login',user)
+console.log("res.data ?",res.data);
+dispatch(loginwithuser(res.data))
+    }catch(err){
+        console.log(err);
+    }
+ }

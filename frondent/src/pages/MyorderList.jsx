@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeOrders } from '../Redux/apiCall';
+import { cancelOrders, removeOrders } from '../Redux/apiCall';
 const MyorderList = () => {
   const dispatch=useDispatch()
   const [state,setstate]=useState([])

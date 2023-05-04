@@ -1,15 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { loginform } from '../Redux/Apicall';
+import { useDispatch } from 'react-redux';
+
+const Main=styled.div`
+  
+  width: auto;
+  height: auto;
+  margin: 100px;
+`;
 
 const Login = () => {
+
+  const [username,setuserName]=useState('')
+  const [password,setPassword]=useState('')
+const dispatch=useDispatch()
+
+const display = (e)=>{
+  e.preventDefault();
+  loginform(dispatch,{username,password})
+
+}
+
+
   return (
-    <div>
+    <Main>
+      <form onSubmit={display}>
   <div class="form-outline mb-4">
-    <input type="email" id="form2Example1" class="form-control" />
-    <label class="form-label" for="form2Example1">Email address</label>
+    <input type="text" id="form2Example1" class="form-control" onChange={(e)=>setuserName(e.target.value)} />
+    <label class="form-label" for="form2Example1">Username</label>
   </div>
 
   <div class="form-outline mb-4">
-    <input type="password" id="form2Example2" class="form-control" />
+    <input type="password" id="form2Example2" class="form-control" onChange={(e)=>setPassword(e.target.value)} />
     <label class="form-label" for="form2Example2">Password</label>
   </div>
 
@@ -26,29 +49,9 @@ const Login = () => {
     </div>
   </div>
 
-  <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
-
-
-  <div class="text-center">
-    <p>Not a member? <a href="#!">Register</a></p>
-    <p>or sign up with:</p>
-    <button type="button" class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-facebook-f"></i>
-    </button>
-
-    <button type="button" class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-google"></i>
-    </button>
-
-    <button type="button" class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-twitter"></i>
-    </button>
-
-    <button type="button" class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-github"></i>
-    </button>
-  </div>
-    </div>
+  <button type="submit" class="btn btn-primary btn-block mb-4" >Sign in</button>
+  </form>
+    </Main>
   )
 }
 
