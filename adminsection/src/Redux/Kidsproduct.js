@@ -8,7 +8,9 @@ export const kidsproducts=createSlice({
     },
     reducers:{
         kidsTotalitems:(state,action)=>{
+            state.kidsfullproducts.shift()
             state.kidsfullproducts.push(action.payload)
+    
         }
     }
     

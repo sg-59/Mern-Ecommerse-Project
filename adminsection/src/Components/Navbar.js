@@ -45,8 +45,6 @@ const Menu = styled.div`
 
 const Navbar = () => {
   const dispatch=useDispatch()
-
-
 const name=useSelector((state)=>state.userInfo.name)
 
 console.log('//////',name);

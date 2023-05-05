@@ -43,3 +43,16 @@ dispatch(loginwithuser(res.data))
         console.log(err);
     }
  }
+
+ export const Updatedproduct = async (Data,Id)=>{
+
+    console.log("Data where ?",Data);
+    console.log("ID where ?",Id);
+    try{
+const res=await publicRequest.put(`/kidsproduct/${Id}`,Data)
+console.log('entha eppo indaye?',res.data);
+
+    }catch(err){
+        console.log(err);
+    }
+ }

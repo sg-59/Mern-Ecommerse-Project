@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const kidsproductschema = new mongoose.Schema(
   {
-    id: { type: Number },
     title: { type: String, require: true },
     desc: { type: String, require: true },
     img: { type: String, require: true },
