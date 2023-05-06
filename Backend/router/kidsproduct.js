@@ -1,9 +1,9 @@
 const router=require('express').Router();
 const kidsproduct = require('../models/kidsproduct');
-const { verifyTokenAdmin } = require('./verifyToken');
+const { verifyTokenAdmin, verifyToken } = require('./verifyToken');
 
 
-router.post('/',verifyTokenAdmin, async (req,res)=>{
+router.post('/',verifyToken, async (req,res)=>{
     const newitem=new kidsproduct(req.body)
 
     try{
@@ -15,7 +15,7 @@ res.status(500).json(err)
     }
 })
 
-router.put("/:id",async(req,res)=>{
+router.put("/:id",verifyToken, async(req,res)=>{
 
     console.log('?',req.body);
     try{
@@ -30,7 +30,7 @@ res.status(500).json(err)
     }
 })
 
-router.delete('/:id',verifyTokenAdmin,async (req,res)=>{
+router.delete('/:id',verifyToken, async (req,res)=>{
     try{
         await kidsproduct.findByIdAndDelete(req.params.id)
         res.status(200).json("item deleted")

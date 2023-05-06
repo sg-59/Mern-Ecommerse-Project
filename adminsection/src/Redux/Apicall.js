@@ -1,4 +1,4 @@
-import { publicRequest } from "../requestMethod"
+import { publicRequest, userRequest } from "../requestMethod"
 import { displayOrder } from "./AllorderRedux"
 import { getAlluserfailure, getAlluserstart, getAllusersuccess } from "./AlluserRedux"
 import { kidsTotalitems } from "./Kidsproduct"
@@ -49,9 +49,27 @@ dispatch(loginwithuser(res.data))
     console.log("Data where ?",Data);
     console.log("ID where ?",Id);
     try{
-const res=await publicRequest.put(`/kidsproduct/${Id}`,Data)
+const res=await userRequest.put(`/kidsproduct/${Id}`,Data)
 console.log('entha eppo indaye?',res.data);
 
+    }catch(err){
+        console.log(err);
+    }
+ }
+
+ export const Addproducts = async (data)=>{
+    console.log("data ? ...",data);
+    try{
+const res=await userRequest.post('/kidsproduct',data)
+console.log('add new products',res.data);
+    }catch(err){
+        console.log(err);
+    }
+ }
+
+ export const DeleteKidsproducts = async (Id)=>{
+    try{
+const res=await userRequest.delete(`/kidsproduct/${Id}`)
     }catch(err){
         console.log(err);
     }

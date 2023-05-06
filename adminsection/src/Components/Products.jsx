@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import { Button, Table } from 'react-bootstrap'
 import { publicRequest } from '../requestMethod'
 import { Link } from 'react-router-dom'
-import { kidsproductsDisplay } from '../Redux/Apicall'
+import { DeleteKidsproducts, kidsproductsDisplay } from '../Redux/Apicall'
 import { useDispatch } from 'react-redux'
 
 const Products = () => {
@@ -46,10 +46,14 @@ const updateProducts = (dataID)=>{
 kidsproductsDisplay(dispatch,dataID)
 }
 
+const DeletekidsItem = (Id)=>{
+  DeleteKidsproducts(Id)
+}
+
   return (
     <div>
         <Navbar/>
-        <Button className='bg-info'>Create new one</Button>
+    <Link to={'/addproducts'} > <Button className='bg-info'>Create new one</Button></Link>  
         <Table striped bordered hover>
     <thead>
      
@@ -78,7 +82,7 @@ kidsproductsDisplay(dispatch,dataID)
         <td>{" "+li.size}</td>
         <td>{li.desc}</td>
         <Link to={'/creatednewone'}><td><Button  className='bg-success' onClick={()=>updateProducts(li._id)}>Update</Button></td></Link>
-        <td><Button  className='bg-danger'>Delete</Button></td>
+        <td><Button onClick={()=>DeletekidsItem(li._id)}  className='bg-danger'>Delete</Button></td>
       </tr>
       </>
         ))}

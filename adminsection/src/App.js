@@ -7,6 +7,7 @@ import Allorder from './Components/Allorder';
 import Products from './Components/Products';
 import Login from './Components/Login';
 import CreatednewOne from './Components/CreatednewOne';
+import AddtonewProduct from './Components/AddtonewProduct';
 import { useSelector } from 'react-redux';
 function App() {
 
@@ -29,6 +30,10 @@ const router=createBrowserRouter([
   {
     path:'creatednewone',
     element:Token ? <CreatednewOne/> : <Login/>
+  },
+  {
+    path:'addproducts',
+    element:Token ? <AddtonewProduct/> : <Login/>
   },
   {
     path:'login',

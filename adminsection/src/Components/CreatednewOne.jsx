@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import styled from "styled-components";
 import { Updatedproduct } from "../Redux/Apicall";
+import { Link } from "react-router-dom";
 
 
  const Main = styled.div`
-  padding: 100px;
-  padding-left: 200px;
+display:flex ;
+flex-direction:column ;
+align-items:center ;
+justify-content:center ;
 
  `
 const CreatednewOne = () => {
@@ -58,6 +61,7 @@ const display = (e)=>{
 
   return (
     <Main>
+      <h1>Updated Products</h1>
       {Data.map((li)=>(
         <>
  <div style={{margin:"5px"}}><input placeholder={"Title  :"+ li.title}  onChange={(e)=>setTitle(e.target.value)}/></div>
@@ -72,6 +76,7 @@ const display = (e)=>{
  
         </>
       ))}
+        <Link to={'/products'}> <button>Move to Products page</button></Link>  
     </Main>
    
   );
