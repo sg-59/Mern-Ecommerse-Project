@@ -1,17 +1,41 @@
 const router=require('express').Router();
 const order= require('../models/order');
 const { verifyTokenAdmin, verifyTokenAndAuthorization,verifyToken } = require('./verifyToken');
+const Razorpay= require('razorpay')
+const helpers=require('./Userhelpers/payment')
+
+
+
+
 
 
 router.post('/', async(req,res)=>{
     const neworder=new order(req.body)
-    try{
+
+    if(req.body.status==='COD'){
+
+        try{
             const savedorder= await neworder.save();
             res.status(201).json(savedorder)
             console.log("enathavam", savedorder)
+
+
     }catch(err){
 res.status(500).json(err)
     }
+    }else{
+
+        const savedorder= await neworder.save();
+        res.status(201)
+        console.log("enathavam", savedorder)
+        helpers.generateRazorpay(savedorder._id,savedorder.amount).then((response)=>{
+            res.json(response)
+            console.log('response',response);
+                });
+    }
+ 
+
+
 });
 
 router.put("/:id",verifyTokenAdmin,async(req,res)=>{
@@ -82,5 +106,14 @@ res.status(200).json(income)
     }catch(err){
         res.status(500).json(err)
     }
+})
+
+router.post('/verify',async(req,res)=>{
+    console.log('verify in backend',req.body);
+helpers.verifyPayment(req.body).then(()=>{
+    res.json({status:true})
+}).catch((err)=>{
+    res.json({status:false})
+})
 })
 module.exports=router

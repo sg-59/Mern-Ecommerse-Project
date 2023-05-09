@@ -13,6 +13,7 @@ import Checkout from "./pages/Checkout";
 import { useSelector } from "react-redux";
 import OrderSuccessfull from "./pages/OrderSuccessfull";
 import MyorderList from "./pages/MyorderList";
+import Payment from "./pages/Payment";
 
 
 function App() {
@@ -62,6 +63,13 @@ function App() {
       path: "myorderlist",
       element: <MyorderList />,
     },
+  
+    {
+      path: "payment",
+      element: <Payment />,
+    },
+  
+  
   ]);
       
   return (

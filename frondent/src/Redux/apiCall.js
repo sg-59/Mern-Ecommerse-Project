@@ -68,3 +68,18 @@ console.log(err);
   }
 }
 
+export const  razorpayVerify= async(payment,order)=>{
+
+  console.log('verifying',payment,order);
+  try{
+const res=await publicRequest.post('/order/verify',{payment,order})
+console.log('final result',res.data);
+if(res.data){
+  window.location.href='/ordersuccess'
+}
+
+  }catch(err){
+    console.log(err);
+  }
+}
+

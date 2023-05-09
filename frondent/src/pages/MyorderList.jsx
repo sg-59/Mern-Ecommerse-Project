@@ -2,13 +2,26 @@ import React, { useEffect, useState } from 'react'
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { cancelOrders, removeOrders } from '../Redux/apiCall';
+import { publicRequest } from '../requestMethod';
 const MyorderList = () => {
   const dispatch=useDispatch()
   const [state,setstate]=useState([])
-  const orderDetails=useSelector((state)=>state.orders.orderInfo)
-  console.log('order details ??',orderDetails);
+
 useEffect(()=>{
-  setstate(orderDetails)
+
+const dispaly =async ()=>{
+try {
+const res=await publicRequest.get('/order')
+console.log('data ? ====',res.data);
+const orderDetails=res.data
+setstate(orderDetails)
+}catch(err){
+  console.log(err);
+}
+}
+dispaly()
+
+ 
 },[state])
 
 

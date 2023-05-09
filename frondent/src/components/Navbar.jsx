@@ -55,10 +55,12 @@ const Right = styled.div`
 const Menu = styled.div`
   margin-left: 1.5em;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 `;
 
 const Navbar = () => {
-  
+
 const quantity=useSelector(state=>state.cart.quantity)
 const name=  useSelector(state=>state.user.currentuser.username) 
 console.log('name?',name);

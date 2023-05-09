@@ -17,6 +17,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
+  text-decoration: none;
 `;
 
 const Title = styled.h1`
@@ -114,13 +115,14 @@ const MensProducts = () => {
             }}
           >
             <Card.Img variant="top" src={item.img} style={{ height: "14em" }} />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
+            <Card.Body style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+              <Card.Title>{item.title}</Card.Title>
               <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
+                <h3 style={{textDecoration:'none'}}>{item.size[0]}</h3>
               </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
+              <Card.Text>
+                {item.price}
+              </Card.Text>
             </Card.Body>
           </Card>
         </Link>

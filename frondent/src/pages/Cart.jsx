@@ -8,6 +8,7 @@ import { publicRequest, userRequest } from "../requestMethod";
 import { Link } from "react-router-dom";
 import { Remove, removeCartitem } from "../Redux/apiCall";
 import { removedAllCart, removedItem } from "../Redux/cartRedux";
+import { HttpStatusCode } from "axios";
 
 const Container = styled.div``;
 
@@ -146,7 +147,6 @@ const Cart = () => {
   const [Total, setTotal] = useState([]);
   const [Amount, setAmount] = useState();
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (Total) {
       const amount = Total.reduce(sum, 0);
@@ -272,7 +272,7 @@ const removecart = (e)=>{
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>₹ {Amount}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+
           </Summary>
         </Bottom>
       </Wrapper>

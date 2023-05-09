@@ -9,6 +9,7 @@ orderInfo:[]
 reducers:{
     addtoOrders:(state,action)=>{
         console.log('something order mmm ok ahnao',action.payload);
+        state.orderInfo.pop();
         state.orderInfo.push(action.payload)
     },
     removeOrder:(state,action)=>{

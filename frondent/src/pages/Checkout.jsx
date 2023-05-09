@@ -16,11 +16,15 @@ const Main = styled.div`
 const SubMain =styled.div`
 width:100% ;
 
+`;
+const DIV = styled.div `
+margin:10px ;
 `
 
 const Checkout = () => {
   const [stateCart, setstateCart] = useState([]);
- 
+ const [value,setValue]=useState('')
+ console.log('Razorpay',value);
   const dispatch = useDispatch();
   const location = useRef();
   const city = useRef();
@@ -84,7 +88,7 @@ const Checkout = () => {
       products:[{productId,quantity}],
       amount,
       address,
-      status: "COD success",
+      status: value
     });
 
     removeCartitem(dispatch)
@@ -136,7 +140,17 @@ const Checkout = () => {
           </button>
          
         </form>
-        <Link to={'/ordersuccess'}>
+
+<DIV>
+  <label>Cash on delivery</label>
+  <input type="radio" value={'COD'} name="Payment" onChange={(e)=>setValue(e.target.value)}/>
+  <br/>
+  <br/>
+  <label>Online payment</label>
+  <input type="radio" value={'ONLINE'} name="Payment" onChange={(e)=>setValue(e.target.value)}/>
+</DIV>
+
+        <Link to={value === 'COD' ? '/ordersuccess' : '/payment'}>
         <button style={{marginTop:'20px',backgroundColor:'green',color:'white'}}>Apply</button>
         </Link>
         </SubMain>
