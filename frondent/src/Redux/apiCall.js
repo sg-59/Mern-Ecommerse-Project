@@ -3,6 +3,19 @@ import { addtoCart, removedAllCart } from "./cartRedux";
 import { addtoOrders, removeOrder } from "./orderRedux";
 import { loginFailure, loginStart, loginSuccess } from "./userRedux";
 
+
+export const RegisterUser=async(Info)=>{
+  console.log(Info);
+  try{
+const res=await publicRequest.post('/auth/signup',Info)
+console.log('register info',res.data);
+  }catch(err){
+    console.log(err);
+  }
+}
+
+
+
 export const login = async (dispatch, user) => {
 
   console.log('logil enthanano',user);
@@ -42,12 +55,13 @@ export const Orders=async (dispatch,orderDetails)=>{
   console.log('order Details',orderDetails);
   try{
 const res=await publicRequest.post('/order',orderDetails)
-console.log('evideyenkilum ethyo order',res);
+console.log('evideyenkilum ethyo order',res.data);
 dispatch(addtoOrders(res.data))
   }catch(err){
     console.log('error  ok',err);
   }
 }
+
 
 export const removeCartitem=async(dispatch)=>{
 

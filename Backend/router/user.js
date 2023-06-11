@@ -16,7 +16,7 @@ const updateUser=await User.findByIdAndUpdate(req.params.id,{
 {new:true}
 );
 res.status(200).json(updateUser)
-    }catch(err){ 
+    }catch(err){  
 res.status(500).json(err)
     }
 })

@@ -5,6 +5,7 @@ const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
 router.post("/signup", async (req, res) => {
+  console.log('backend signup',req.body);
   const userdata = new User({
     username: req.body.username,
     email: req.body.email,
@@ -12,9 +13,11 @@ router.post("/signup", async (req, res) => {
       req.body.password,
       process.env.CRYPTO_JS
     ).toString(),
-  });
-  try {
+});
+console.log('userdata',userdata);
+  try { 
     const saveduser = await userdata.save();
+    console.log('saved User',saveduser);
     console.log(saveduser);
     res.status(201).json(saveduser);
   } catch (err) {

@@ -68,7 +68,7 @@ const MensProducts = () => {
     });
   };
 
-  console.log(filter);
+  console.log('filter',filter);
 
   useEffect(() => {
     const Getproducts = async () => {
@@ -92,6 +92,9 @@ const MensProducts = () => {
         )
       )
     );
+
+    console.log('****',filteredmenpro);
+
     if (sortPrice == "newest") {
       setfilteredmenpro((prev) =>
         [...prev].sort((a, b) => a.createdAt - b.createdAt)
@@ -115,14 +118,15 @@ const MensProducts = () => {
             }}
           >
             <Card.Img variant="top" src={item.img} style={{ height: "14em" }} />
-            <Card.Body style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
-              <Card.Title>{item.title}</Card.Title>
-              <Card.Text>
-                <h3 style={{textDecoration:'none'}}>{item.size[0]}</h3>
-              </Card.Text>
-              <Card.Text>
+            <Card.Body style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+              <Card.Title style={{color:'black'}}>{item.title} ,</Card.Title>
+              <Card.Title style={{color:'black'}}>{item.categories[0]} ,</Card.Title>
+              <Card.Title style={{color:'black'}}>
+                <h5 >{item.size[0]},</h5>
+              </Card.Title>
+              <Card.Title style={{color:'black'}}>
                 {item.price}
-              </Card.Text>
+              </Card.Title>
             </Card.Body>
           </Card>
         </Link>

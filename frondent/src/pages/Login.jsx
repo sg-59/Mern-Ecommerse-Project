@@ -1,60 +1,18 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import styled from "styled-components";
 import { login } from '../Redux/apiCall';
 import {Link} from 'react-router-dom'
+import {
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBBtn,
+  MDBIcon,
+  MDBInput,
+  MDBCheckbox
+}
+from 'mdb-react-ui-kit';
 
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: url("https://as2.ftcdn.net/v2/jpg/02/16/47/33/1000_F_216473351_FCLq1pZQOBFrgcyPBphKvBd8Z5wjD1dI.jpg")
-      center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-  width: 25%;
-  padding: 20px;
-  background-color: transparent;
-`;
-
-const Title = styled.h1`
-  font-size: 36px;
-  font-weight: 300;
-  color: white;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 10px 0;
-  padding: 10px;
-`;
-const Button = styled.button`
-  width: 30%;
-  border: none;
-  padding: 15px 20px;
-  background-color: #000000;
-  color: white;
-  cursor: pointer;
-  margin-bottom: 10px;
-`;
-
-const Links = styled.a`
-  margin: 5px 0px;
-  font-size: 12px;
-  text-decoration: none;
-  cursor: pointer;
-  color: white;
-`;
 
 const Login = () => {
 const [username,setName]=useState("");
@@ -66,17 +24,39 @@ login(dispatch,{username,password})
 }
 
   return (
-    <Container>
-    <Wrapper>                   
-      <Title>SIGN IN</Title>
-      <Form>
-        <Input placeholder="username" onChange={(e)=>setName(e.target.value)} />
-        <Input placeholder="password" type={password} onChange={(e)=>setPassword(e.target.value)} />
-        <Button onClick={handleBar}>LOGIN</Button>
-     <Link to={'/register'}><Links>CREATE A NEW ACCOUNT</Links></Link>
-      </Form>
-    </Wrapper>
-  </Container>
+    <MDBContainer className="p-3 my-5">
+
+    <MDBRow>
+
+      <MDBCol col='10' md='6'>
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image" />
+      </MDBCol>
+
+      <MDBCol col='4' md='6'>
+
+
+        <MDBInput wrapperClass='mb-4' label='User Name' id='formControlLg' type='text' size="lg" value={username} onChange={(e)=>setName(e.target.value)} />
+        <MDBInput wrapperClass='mb-4' label='Password' id='formControlLg' type='password' size="lg" value={password}  onChange={(e)=>setPassword(e.target.value)}/>
+
+
+        <MDBBtn className="mb-4 w-100" size="lg"  onClick={handleBar}>Sign in</MDBBtn>
+        <Link to={'/register'}>CREATE A NEW ACCOUNT</Link>
+      </MDBCol>
+
+    </MDBRow>
+
+  </MDBContainer>
+  //   <Container>
+  //   <Wrapper>                   
+  //     <Title>SIGN IN</Title>
+  //     <Form>
+  //       <Input placeholder="username" onChange={(e)=>setName(e.target.value)} />
+  //       <Input placeholder="password" type={password} onChange={(e)=>setPassword(e.target.value)} />
+  //       <Button onClick={handleBar}>LOGIN</Button>
+  //    <Link to={'/register'}><Links>CREATE A NEW ACCOUNT</Links></Link>
+  //     </Form>
+  //   </Wrapper>
+  // </Container>
   )
 }
 

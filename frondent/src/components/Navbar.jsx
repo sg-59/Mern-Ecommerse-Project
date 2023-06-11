@@ -109,7 +109,6 @@ dispatch(logoutUser())
           </Menu>
           <Menu>{name}</Menu>
           <Link to={'/myorderlist'}> <Menu>My order list</Menu></Link>
-          <Menu>Register</Menu>
          {!name && <Menu>Sign-in</Menu>}
           <Menu onClick={Logout}>LOGOUT</Menu>
         </Right>

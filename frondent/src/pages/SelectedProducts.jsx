@@ -158,7 +158,7 @@ const SelectedProducts = () => {
             neque ea iste nobis quas, laborum ipsam fugit quo quae quia
             repellat? Molestias mollitia commodi sit aut recusandae ex at porro
           </Desc>
-          <Price>₹ 1950</Price>
+          <Price>₹ {product.price}</Price>
 
           <AddContainer>
             <AmountContainer>

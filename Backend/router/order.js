@@ -61,7 +61,8 @@ res.status(500).json(err)
    
 })
 
-router.get("/find/:userId",verifyTokenAndAuthorization, async(req,res)=>{
+router.get("/find/:userId", async(req,res)=>{
+    console.log('***',req.params.userId);
     try{
         const orders=await order.find({userId:req.params.userId})  
         res.status(200).json(orders)

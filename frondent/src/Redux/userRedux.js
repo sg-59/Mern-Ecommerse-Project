@@ -22,6 +22,8 @@ reducers:{
    },
    logoutUser:(state)=>{
     state.currentuser=null
+    state.isFetching=false
+    state.isError=false
    }
 }
 })

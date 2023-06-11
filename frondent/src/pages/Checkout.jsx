@@ -4,32 +4,22 @@ import styled from "styled-components";
 import { publicRequest } from "../requestMethod";
 import { Orders, removeCartitem } from "../Redux/apiCall";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
 
-const Main = styled.div`
-  width: 50%;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  margin: 200px;
-`;
-const SubMain =styled.div`
-width:100% ;
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow, MDBTypography } from 'mdb-react-ui-kit';
 
-`;
-const DIV = styled.div `
-margin:10px ;
-`
 
 const Checkout = () => {
   const [stateCart, setstateCart] = useState([]);
  const [value,setValue]=useState('')
  console.log('Razorpay',value);
   const dispatch = useDispatch();
-  const location = useRef();
+  const firstName = useRef();
+  const lastName = useRef();
+  const addresses = useRef();
   const city = useRef();
   const states = useRef();
   const pin = useRef();
+  const email = useRef();
 
   const userId = useSelector((state) => state.user.currentuser._id);
 
@@ -66,16 +56,16 @@ const Checkout = () => {
 
   const display = (e) => {
     e.preventDefault();
-    const add = location.current.value;
-    const cit = city.current.value;
-    const sta = states.current.value;
-    const pi = pin.current.value;
-    console.log(add, cit, sta, pi);
+    const FirstName = firstName.current.value;
+    const LastName = lastName.current.value;
+    const Address = addresses.current.value;
+    const City = city.current.value;
+    const State = states.current.value;
+    const Pin = pin.current.value;
+    const Email = email.current.value;
+    
     const address = {
-      deatils: add,
-      cityDetails: cit,
-      stateSetails: sta,
-      zipetails: pi,
+      FirstName,LastName,Address,City,State,Pin,Email
     };
 
     console.log(
@@ -95,67 +85,144 @@ const Checkout = () => {
   };
 
   return (
-    <>
-      <Main>
-        <SubMain>
-        <h1>Address</h1>
-        <form onSubmit={display}>
-          <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input
-              type="text"
-              class="form-control"
-              id="inputAddress"
-              ref={location}
-            />
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputCity">City</label>
-              <input
-                type="text"
-                class="form-control"
-                id="inputCity"
-                ref={city}
-              />
-            </div>
-            <div class="form-group col-md-4">
-              <label for="inputState">State</label>
-              <select id="inputState" class="form-control" ref={states}>
-                <option selected>Choose...</option>
-                <option>Kerala</option>
-                <option>Tamilnadu</option>
-                <option>Andhrapredesh</option>
-                <option>Goa</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="inputZip">Zip</label>
-              <input type="text" class="form-control" id="inputZip" ref={pin} />
-            </div>
-          </div>
-         
-          <button style={{marginTop:'20px',backgroundColor:'blue',color:'white'}} type="submit" class="btn btn-primary">
-          Submit
-          </button>
-         
-        </form>
 
-<DIV>
-  <label>Cash on delivery</label>
+    <MDBContainer className="py-5" style={{ maxWidth: '1100px' }}>
+    <MDBRow className="justify-content-center align-items-center">
+      <MDBCol>
+        <MDBCard className="my-4 shadow-3">
+          <MDBRow className="g-0">
+            <MDBCol md="6" className="d-xl-block bg-image">
+              <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Others/extended-example/delivery.webp" alt="Sample photo" fluid />
+              <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+                <div className="justify-content-center align-items-center h-100">
+                  <div className="text-center" style={{ marginTop: '220px' }}>
+                    <MDBIcon fas icon="truck text-white" size="3x" />
+                    <p className="text-white title-style">delivery</p>
+                    <p className="text-white mb-0"></p>
+
+                    <figure className="text-center mb-0">
+                      <blockquote className="blockquote text-white">
+                        <p className="pb-3">
+                          <MDBIcon fas icon="quote-left text-primary" size="xs" style={{color: 'hsl(210, 100%, 50%)'}} />
+                          <span className="lead font-italic">Everything at your doorstep.</span>
+                          <MDBIcon fas icon="quote-right text-primary" size="xs" style={{color: 'hsl(210, 100%, 50%)'}} />
+                        </p>
+                      </blockquote>
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </MDBCol>
+            <MDBCol md="6">
+              <MDBCardBody className="p-md-5 text-black">
+                <MDBTypography tag="h3" className="mb-4 text-uppercase">Delivery Info</MDBTypography>
+                
+                <MDBRow>
+           
+                <MDBCol md="6" className="mb-4">
+                    <MDBInput label='First name' type='text' size="lg" ref={firstName} required={true} />
+                  </MDBCol>
+                  <MDBCol md="6" className="mb-4">
+                    <MDBInput label='Last name' type='text' size="lg" ref={lastName} required={true}/>
+                  </MDBCol>
+                </MDBRow>
+
+                <MDBInput label='Address' type='text' className="mb-4" size="lg" ref={addresses} required={true}/>
+
+                <MDBRow>
+                  <MDBCol md="6" className="mb-4">
+                    <MDBInput label='State' type='text' size="lg" ref={states} required={true} />
+                  </MDBCol>
+                  <MDBCol md="6" className="mb-4">
+                    <MDBInput label='City' type='text' size="lg" ref={city}  required={true}/>
+                  </MDBCol>
+                </MDBRow>
+
+                <MDBInput label='Zip' type='text' className="mb-4" size="lg" ref={pin}  required={true}/>
+
+                <MDBInput label='Email' type='text' className="mb-4" size="lg" ref={email}  required={true}/>
+
+                   <label>Cash on delivery</label>
   <input type="radio" value={'COD'} name="Payment" onChange={(e)=>setValue(e.target.value)}/>
-  <br/>
-  <br/>
-  <label>Online payment</label>
+  <br/>  <br/>
+ <label>Online payment</label>
   <input type="radio" value={'ONLINE'} name="Payment" onChange={(e)=>setValue(e.target.value)}/>
-</DIV>
 
-        <Link to={value === 'COD' ? '/ordersuccess' : '/payment'}>
-        <button style={{marginTop:'20px',backgroundColor:'green',color:'white'}}>Apply</button>
-        </Link>
-        </SubMain>
-      </Main>
-    </>
+                <div className="d-flex justify-content-end pt-3">
+               
+                  <MDBBtn size="lg" className="ms-2" style={{backgroundColor: 'hsl(210, 100%, 50%)'}} onClick={display}> <Link to={value === 'COD' ? '/ordersuccess' : '/payment'}>Place order</Link></MDBBtn>
+                
+                </div>
+
+              </MDBCardBody>
+            </MDBCol>
+            
+          </MDBRow>
+        </MDBCard>
+      </MDBCol>
+    </MDBRow>
+  </MDBContainer>
+//     <>
+//       <Main>
+//         <SubMain>
+//         <h1>Address</h1>
+//         <form onSubmit={display}>
+//           <div class="form-group">
+//             <label for="inputAddress">Address</label>
+//             <input
+//               type="text"
+//               class="form-control"
+//               id="inputAddress"
+//               ref={location}
+//             />
+//           </div>
+//           <div class="form-row">
+//             <div class="form-group col-md-6">
+//               <label for="inputCity">City</label>
+//               <input
+//                 type="text"
+//                 class="form-control"
+//                 id="inputCity"
+//                 ref={city}
+//               />
+//             </div>
+//             <div class="form-group col-md-4">
+//               <label for="inputState">State</label>
+//               <select id="inputState" class="form-control" ref={states}>
+//                 <option selected>Choose...</option>
+//                 <option>Kerala</option>
+//                 <option>Tamilnadu</option>
+//                 <option>Andhrapredesh</option>
+//                 <option>Goa</option>
+//               </select>
+//             </div>
+//             <div class="form-group col-md-2">
+//               <label for="inputZip">Zip</label>
+//               <input type="text" class="form-control" id="inputZip" ref={pin} />
+//             </div>
+//           </div>
+         
+//           <button style={{marginTop:'20px',backgroundColor:'blue',color:'white'}} type="submit" class="btn btn-primary">
+//           Submit
+//           </button>
+         
+//         </form>
+
+// <DIV>
+//   <label>Cash on delivery</label>
+//   <input type="radio" value={'COD'} name="Payment" onChange={(e)=>setValue(e.target.value)}/>
+//   <br/>
+//   <br/>
+//   <label>Online payment</label>
+//   <input type="radio" value={'ONLINE'} name="Payment" onChange={(e)=>setValue(e.target.value)}/>
+// </DIV>
+
+//         
+//         <button style={{marginTop:'20px',backgroundColor:'green',color:'white'}}>Apply</button>
+//         </Link>
+//         </SubMain>
+//       </Main>
+//     </>
   );
 };
 
