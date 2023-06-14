@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cancelOrders, removeOrders } from '../Redux/apiCall';
 import { publicRequest, userRequest } from '../requestMethod';
 import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+
+
+
 const MyorderList = () => {
   const dispatch=useDispatch()
   const [state,setstate]=useState([])
 
 const userId=useSelector((states)=>states.user.currentuser._id)
-
+const profilPic=useSelector((state)=>state.user.currentuser)
 
 useEffect(()=>{
   const display =async ()=>{
@@ -50,9 +53,9 @@ removeOrders(dispatch,Id)
         <td>
           <div className='d-flex align-items-center'>
             <img
-              src='https://mdbootstrap.com/img/new/avatars/8.jpg'
+              src={`/Uploads/${profilPic.Images}`}
               alt=''
-              style={{ width: '45px', height: '45px' }}
+              style={{ width: '45px', height: '45px' }} 
               className='rounded-circle'
             />
             <div className='ms-3'>

@@ -8,8 +8,6 @@ import { useDispatch } from 'react-redux'
 
 const Products = () => {
 const [products,setproducts]=useState([])
-const [mensproducts,setmensproducts]=useState([])
-const [womensproducts,setwomensproducts]=useState([])
 const dispatch=useDispatch()
 useEffect(()=>{
 
@@ -21,23 +19,7 @@ useEffect(()=>{
             }
             catch(err){
                 console.log(err);
-            }
-
-            try{
-                const datas=await publicRequest.get('/mensproduct')
-                setmensproducts(datas.data)
-            }catch(err){
-                console.log(err);
-            }
-
-            
-            try{
-                const datas=await publicRequest.get('/womensproduct')
-                setwomensproducts(datas.data)
-            }catch(err){
-                console.log(err);
-            }
-    }
+            } }
 display()
 },[])
 
@@ -86,39 +68,7 @@ const DeletekidsItem = (Id)=>{
       </tr>
       </>
         ))}
-
-<th style={{textAlign:'end'}}><h3>Mens SECTION</h3></th>
-    {mensproducts.map((li)=>(
-            <>
-      <tr>
-        <td><img style={{width:'100px',height:'100px'}} src={li.img}/></td>
-        <td>{li._id}</td>
-        <td>{li.title}</td>
-        <td>{" "+li.categories}</td>
-        <td>{" "+li.size}</td>
-        <td>{li.desc}</td>
-        <Link to={'/creatednewone'}><td><Button  className='bg-success'>Update</Button></td></Link>
-        <td><Button className='bg-danger'>Delete</Button></td>
-      </tr>
-      </>
-        ))}
-
-<th style={{textAlign:'end'}}><h3>Women SECTION</h3></th>
-    {womensproducts.map((li)=>(
-            <>
-      <tr>
-        <td><img style={{width:'100px',height:'100px'}} src={li.img}/></td>
-        <td>{li._id}</td>
-        <td>{li.title}</td>
-        <td>{" "+li.categories}</td>
-        <td>{" "+li.size}</td>
-        <td>{li.desc}</td>
-        <Link to={'/creatednewone'}><td><Button  className='bg-success'>Update</Button></td></Link>
-        <td><Button className='bg-danger'>Delete</Button></td>
-      </tr>
-      </>
-        ))}
-    </tbody>
+ </tbody>
   </Table>
 
     </div>

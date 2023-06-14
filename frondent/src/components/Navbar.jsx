@@ -89,7 +89,7 @@ dispatch(logoutUser())
             <Input />
           </SearchContainer>
         </Left>
-        <Center>Shopping-Cart</Center>
+        <Center>Thika store</Center>
         <Right>
           <Menu>
             <Link to={'/cart'}>
@@ -108,6 +108,7 @@ dispatch(logoutUser())
             </Link>
           </Menu>
           <Menu>{name}</Menu>
+          <Link to={'/profile'}><Menu>Profile</Menu></Link>
           <Link to={'/myorderlist'}> <Menu>My order list</Menu></Link>
          {!name && <Menu>Sign-in</Menu>}
           <Menu onClick={Logout}>LOGOUT</Menu>

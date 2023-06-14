@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import OrderSuccessfull from "./pages/OrderSuccessfull";
 import MyorderList from "./pages/MyorderList";
 import Payment from "./pages/Payment";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -43,10 +44,10 @@ function App() {
       path: "cart",
       element: <Cart /> 
     },
-    // {
-    //   path: "login",
-    //   element:  <Login />,
-    // },
+    {
+      path: "profile",
+      element:  <Profile />,
+     },
     {
       path: "register",
       element: <Register />,

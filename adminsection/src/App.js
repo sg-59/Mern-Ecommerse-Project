@@ -8,7 +8,9 @@ import Products from './Components/Products';
 import Login from './Components/Login';
 import CreatednewOne from './Components/CreatednewOne';
 import AddtonewProduct from './Components/AddtonewProduct';
+import MensProduct from './Components/MensProduct';
 import { useSelector } from 'react-redux';
+import Register from './Components/Register';
 function App() {
 
   const Token=useSelector((state)=>state.userInfo.accessToken)
@@ -39,6 +41,14 @@ const router=createBrowserRouter([
     path:'login',
     element:<Login/>
   },
+  {
+    path:'mensproduct',
+    element:Token ?<MensProduct/> : <Login/>
+  },
+  {
+    path:'register',
+    element:<Register/>
+  }
 ])
 
   return (

@@ -3,9 +3,13 @@ import axios from "axios";
 
 const BASE_URL="http://localhost:5000/api/"
 
-    var TOKEN =(JSON.parse(JSON.parse(localStorage.getItem("persist:root")).userInfo).accessToken)
+    // var TOKEN =(JSON.parse(JSON.parse(localStorage.getItem("persist:root")).userInfo).accessToken)
 
-    
+    if (localStorage.getItem("infiniteScrollEnabled") != null) {
+        var TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user)
+        ? (JSON.parse(JSON.parse(localStorage.getItem("persist:root")).userInfo).accessToken)
+        : null;
+      }
 
   console.log('user Request ?',TOKEN);
 

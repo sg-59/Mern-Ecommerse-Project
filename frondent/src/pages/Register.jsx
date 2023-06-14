@@ -17,46 +17,68 @@ from 'mdb-react-ui-kit';
 
 const Register = () => {
 const [username,setUsername]=useState('')
+const [Images,setImg]=useState({})
 const [email,setEmail]=useState('')
+const [mobile,setMobile]=useState('')
+const [address,setAddress]=useState('')
 const [password,setPassword]=useState('')
-
-const Info={
-  username,
-  email,
-  password,
-}
-
+let formData=new FormData();
+formData.append('username',username)
+formData.append('email',email)
+formData.append('mobile',mobile)
+formData.append('address',address)
+formData.append('password',password)
+formData.append('Images',Images)
+ 
 const display =async (e)=>{
   e.preventDefault();
-  RegisterUser(Info)
+  console.log('****',formData);
+  RegisterUser(formData)
 }
 
   return (
     <MDBContainer fluid>
-
+<form onSubmit={display} encType='multipart/form-data'>
     <MDBCard className='text-black m-5' style={{borderRadius: '25px'}}>
       <MDBCardBody>
         <MDBRow>
           <MDBCol md='10' lg='6' className='order-2 order-lg-1 d-flex flex-column align-items-center'>
 
             <h3 classNAme="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</h3>
-
+  
             <div className="d-flex flex-row align-items-center mb-4 ">
               <MDBIcon fas icon="user me-3" size='lg'/>
               <MDBInput label='Your Name' id='form1' type='text' className='w-100' value={username} onChange={(e)=>setUsername(e.target.value)}/>
             </div>
 
+         
+
             <div className="d-flex flex-row align-items-center mb-4">
               <MDBIcon fas icon="envelope me-3" size='lg'/>
-              <MDBInput label='Your Email' id='form2' type='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
+              <MDBInput label='Your Email' id='form3' type='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
+            </div>
+
+         <div className="d-flex flex-row align-items-center mb-4">
+              <MDBIcon fas icon="lock me-3" size='lg'/>
+              <MDBInput label='Mobile Number' id='form5' type='number'  value={mobile} onChange={(e)=>setMobile(e.target.value)}/>
             </div>
 
             <div className="d-flex flex-row align-items-center mb-4">
               <MDBIcon fas icon="lock me-3" size='lg'/>
-              <MDBInput label='Password' id='form3' type='password'  value={password} onChange={(e)=>setPassword(e.target.value)}/>
+              <MDBInput label='Address' id='form6' type='text'  value={address} onChange={(e)=>setAddress(e.target.value)}/>
             </div>
 
-            <MDBBtn className='mb-4' size='lg' onClick={display}>Register</MDBBtn>
+            <div className="d-flex flex-row align-items-center mb-4">
+              <MDBIcon fas icon="lock me-3" size='lg'/>
+              <MDBInput label='Password' id='form4' type='password'  value={password} onChange={(e)=>setPassword(e.target.value)}/>
+            </div>
+
+            <div className="d-flex flex-row align-items-center mb-4 ">
+              <MDBIcon fas icon="user me-3" size='lg'/>
+              <MDBInput  id='form2' type='file' filename='Images' className='w-100'  onChange={(e)=>setImg(e.target.files[0])}/>
+            </div>
+   
+            <MDBBtn className='mb-4' size='lg' type='submit'>Register</MDBBtn>
             <div><Link style={{textDecoration:'none',color:'black',fontSize:'14px',}} to={'/'}><u>I have a account</u></Link></div>
           </MDBCol>
 
@@ -67,28 +89,8 @@ const display =async (e)=>{
         </MDBRow>
       </MDBCardBody>
     </MDBCard>
-
+</form>
   </MDBContainer>
-  //   <Container>
-  //   <Wrapper>
-  //     <Title>CREATE AN ACCOUNT</Title>
-  //     <Form>
-  //       {/* <Input type='text' placeholder="username"   />
-  //       <Input type='email' placeholder="email"   />
-  //       <Input type='password' placeholder="password" /> */}
-  //       <Agreement>
-  //         By creating an account, I consent to the processing of my personal
-  //         data in accordance with the <b>PRIVACY POLICY</b>
-      
-  //       </Agreement>
-        
-  //       <Button >CREATE</Button>
-  //     </Form>
-  // <div>
- 
-  // </div>
-  //   </Wrapper>
-  // </Container>
   )
 }
 

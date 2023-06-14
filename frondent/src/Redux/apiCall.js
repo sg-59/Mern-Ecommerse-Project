@@ -4,10 +4,10 @@ import { addtoOrders, removeOrder } from "./orderRedux";
 import { loginFailure, loginStart, loginSuccess } from "./userRedux";
 
 
-export const RegisterUser=async(Info)=>{
-  console.log(Info);
+export const RegisterUser=async(formData)=>{
+  console.log('enthayii ??',formData);
   try{
-const res=await publicRequest.post('/auth/signup',Info)
+const res=await publicRequest.post('/auth/signup',formData)
 console.log('register info',res.data);
   }catch(err){
     console.log(err);

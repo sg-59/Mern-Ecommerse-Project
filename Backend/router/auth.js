@@ -3,20 +3,40 @@ const { json } = require("body-parser");
 const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const multer=require('multer');
 
-router.post("/signup", async (req, res) => {
-  console.log('backend signup',req.body);
+
+const storage=multer.diskStorage({
+  destination:(req,file,cb)=>{
+    cb(null,'../frondent/public/Uploads/');
+  },
+  filename:(req,file,cb)=>{
+    cb(null,file.originalname)
+  } 
+})
+
+const upload=multer({storage:storage});
+
+router.post("/signup",upload.single('Images') ,(req, res) => {
+  console.log('backend',req.body);
+  console.log('backend Images',req.file);
   const userdata = new User({
     username: req.body.username,
     email: req.body.email,
+    mobile: req.body.mobile,
+    address: req.body.address,
     password: CryptoJS.AES.encrypt(
       req.body.password,
       process.env.CRYPTO_JS
     ).toString(),
+    Images:req.file.originalname,
+    isAdmin:req.body.isAdmin,
+   
+
 });
 console.log('userdata',userdata);
-  try { 
-    const saveduser = await userdata.save();
+  try {  
+    const saveduser =  userdata.save();
     console.log('saved User',saveduser);
     console.log(saveduser);
     res.status(201).json(saveduser);

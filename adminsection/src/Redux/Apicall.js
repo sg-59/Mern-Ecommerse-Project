@@ -74,3 +74,14 @@ const res=await userRequest.delete(`/kidsproduct/${Id}`)
         console.log(err);
     }
  }
+
+
+ export const registerInfo =async (formData)=>{
+    console.log('adminsection register data',formData);
+    try{
+const res=await publicRequest.post('/auth/signup',formData)
+console.log('res.data in admin section',res.data);
+    }catch(err){
+        console.log(err);
+    }
+ }
