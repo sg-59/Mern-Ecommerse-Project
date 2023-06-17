@@ -2,7 +2,7 @@ import { configureStore,combineReducers } from "@reduxjs/toolkit";
 import AlluserReducer from './AlluserRedux'
 import AllorderReducer from './AllorderRedux'
 import KidsReducer from './Kidsproduct'
-import Userreducer from './UserRedux'
+import Adminreducer from './AdminRedux'
 import {
     persistStore,
     persistReducer,
@@ -20,7 +20,7 @@ import {
     version: 1,
     storage,
   }
-  const rootreducer=combineReducers({users:AlluserReducer,orders:AllorderReducer,kidsitems:KidsReducer,userInfo:Userreducer})
+  const rootreducer=combineReducers({users:AlluserReducer,orders:AllorderReducer,kidsitems:KidsReducer,adminInfo:Adminreducer})
   const persistedReducer = persistReducer(persistConfig,rootreducer);
 export const store = configureStore ({
     reducer:persistedReducer,

@@ -1,57 +1,66 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBCheckbox
+}
+from 'mdb-react-ui-kit';
 import { loginform } from '../Redux/Apicall';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-const Main=styled.div`
-  
-  width: auto;
-  height: auto;
-  margin: 100px;
-`;
+
 
 const Login = () => {
 
-  const [username,setuserName]=useState('')
+  const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
 const dispatch=useDispatch()
 
 const display = (e)=>{
   e.preventDefault();
-  loginform(dispatch,{username,password})
+  loginform(dispatch,{email,password})
 
 }
 
 
   return (
-    <Main>
-      <form onSubmit={display}>
-  <div class="form-outline mb-4">
-    <input type="text" id="form2Example1" class="form-control" onChange={(e)=>setuserName(e.target.value)} />
-    <label class="form-label" for="form2Example1">Username</label>
-  </div>
+    <MDBContainer className='my-5'>
+      
+      <MDBCard>
 
-  <div class="form-outline mb-4">
-    <input type="password" id="form2Example2" class="form-control" onChange={(e)=>setPassword(e.target.value)} />
-    <label class="form-label" for="form2Example2">Password</label>
-  </div>
+        <MDBRow className='g-0 d-flex align-items-center'>
 
-  <div class="row mb-4">
-    <div class="col d-flex justify-content-center">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-        <label class="form-check-label" for="form2Example31"> Remember me </label>
-      </div>
-    </div>
+          <MDBCol md='4'>
+            <MDBCardImage src='https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg' alt='phone' className='rounded-t-5 rounded-tr-lg-0' fluid />
+          </MDBCol>
 
-    <div class="col">
-      <a href="#!">Forgot password?</a>
-    </div>
-  </div>
+          <MDBCol md='8'>
 
-  <button type="submit" class="btn btn-primary btn-block mb-4" >Sign in</button>
-  </form>
-    </Main>
+            <MDBCardBody>
+            <h1><u>Admin Login</u></h1>
+              <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'  value={email}  onChange={(e)=>setEmail(e.target.value)}/>
+              <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
+
+         
+
+              <MDBBtn className="mb-4 w-100" onClick={display}>Sign in</MDBBtn>
+<div> <Link to={'/register'}>Create an account</Link></div>
+            </MDBCardBody>
+           
+          </MDBCol>
+
+        </MDBRow>
+
+      </MDBCard>
+     
+    </MDBContainer>
   )
 }
 

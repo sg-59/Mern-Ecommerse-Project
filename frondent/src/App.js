@@ -19,34 +19,38 @@ import Profile from "./pages/Profile";
 
 function App() {
  const login=useSelector((state)=>state.user.currentuser)
+      if(login){
+        var Token=login.accesstoken
+      }
+       console.log('Token ?',Token);
   const router = createBrowserRouter([
     {
       path: "/",
-      element:login ? <Home /> :<Login/>
+      element:Token ? <Home /> :<Login/>
     },
     {
       path: "mens",
-      element: <MensProducts />,
+      element:Token ? <MensProducts /> :<Login/>
     },
     {
       path: "womens",
-      element: <WomensProducts />,
+      element:Token ?  <WomensProducts /> : <Login/>
     },
     {
       path: "kids",
-      element: <KidsProducts />,
+      element:Token ? <KidsProducts /> : <Login/>
     },
     {
       path: "selectedproducts/:id/:category",
-      element: <SelectedProducts />,
+      element:Token ? <SelectedProducts />  : <Login/>
     },
     {
       path: "cart",
-      element: <Cart /> 
+      element:Token ? <Cart />  : <Login/>
     },
     {
       path: "profile",
-      element:  <Profile />,
+      element:Token ?   <Profile />  : <Login/>
      },
     {
       path: "register",
@@ -54,20 +58,20 @@ function App() {
     },
     {
       path: "checkout",
-      element: <Checkout />,
+      element:Token ? <Checkout />  : <Login/>
     },
     {
       path: "ordersuccess",
-      element: <OrderSuccessfull />,
+      element:Token ? <OrderSuccessfull />  : <Login/>
     },
     {
       path: "myorderlist",
-      element: <MyorderList />,
+      element:Token ? <MyorderList />  : <Login/>
     },
   
     {
       path: "payment",
-      element: <Payment />,
+      element:Token ? <Payment />  : <Login/>
     },
   
   

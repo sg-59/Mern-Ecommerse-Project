@@ -2,7 +2,7 @@ import { publicRequest, userRequest } from "../requestMethod"
 import { displayOrder } from "./AllorderRedux"
 import { getAlluserfailure, getAlluserstart, getAllusersuccess } from "./AlluserRedux"
 import { kidsTotalitems } from "./Kidsproduct"
-import { loginwithuser } from "./UserRedux"
+import { loginwithadmin } from "./AdminRedux"
 
 export const getUsersInfo=async(dispatch)=>{
     dispatch(getAlluserstart())
@@ -34,11 +34,12 @@ dispatch(kidsTotalitems(res.data))
     }
  }
 
- export const loginform=async (dispatch,user)=>{
+ export const loginform=async (dispatch,admin)=>{
+    console.log('admin login',admin);
     try{
-const res=await publicRequest.post('/auth/login',user)
+const res=await publicRequest.post('/adminauth/login',admin)
 console.log("res.data ?",res.data);
-dispatch(loginwithuser(res.data))
+dispatch(loginwithadmin(res.data))
     }catch(err){
         console.log(err);
     }
@@ -79,7 +80,7 @@ const res=await userRequest.delete(`/kidsproduct/${Id}`)
  export const registerInfo =async (formData)=>{
     console.log('adminsection register data',formData);
     try{
-const res=await publicRequest.post('/auth/signup',formData)
+const res=await publicRequest.post('/adminauth/signup',formData)
 console.log('res.data in admin section',res.data);
     }catch(err){
         console.log(err);

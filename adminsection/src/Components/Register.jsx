@@ -11,20 +11,21 @@ import {
     MDBIcon,
     MDBCheckbox
   }
-  from 'mdb-react-ui-kit';
+  from 'mdb-react-ui-kit';   
 import { registerInfo } from '../Redux/Apicall';
+import { Link } from 'react-router-dom';
 
 
 
 
 const Register = () => {
     const [username,setUsername]=useState('')
-    const [Images,setImg]=useState({})
+    const [images,setImg]=useState({})
     const [email,setEmail]=useState('')
     const [mobile,setMobile]=useState('')
     const [address,setAddress]=useState('')
     const [password,setPassword]=useState('')
-    const [isAdmin,setIsadmin]=useState(false)
+  
 
 
 
@@ -34,8 +35,8 @@ formData.append('email',email)
 formData.append('mobile',mobile)
 formData.append('address',address)
 formData.append('password',password)
-formData.append('Images',Images)
-formData.append('isAdmin',isAdmin)
+formData.append('images',images)
+
 
 
 const display =async (e)=>{
@@ -84,13 +85,13 @@ const display =async (e)=>{
     
                 <div className="d-flex flex-row align-items-center mb-4 ">
                   <MDBIcon fas icon="user me-3" size='lg'/>
-                  <MDBInput  id='form2' type='file' filename='Images' className='w-100'  onChange={(e)=>setImg(e.target.files[0])}/>
+                  <MDBInput  id='form2' type='file' filename='images' className='w-100'  onChange={(e)=>setImg(e.target.files[0])}/>
                 </div>
 
-                <input type='text'  value={true} hidden onChange={(e)=>setIsadmin(e.target.value)} />
+              
        
                 <MDBBtn className='mb-4' size='lg' type='submit'>Register</MDBBtn>
-                {/* <div><Link style={{textDecoration:'none',color:'black',fontSize:'14px',}} to={'/'}><u>I have a account</u></Link></div> */}
+                <div><Link style={{textDecoration:'none',color:'black',fontSize:'14px',}} to={'/login'}><u>I have a account</u></Link></div>
               </MDBCol>
     
               <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>

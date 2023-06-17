@@ -114,6 +114,7 @@ const Checkout = () => {
               </div>
             </MDBCol>
             <MDBCol md="6">
+              <form onSubmit={display}>
               <MDBCardBody className="p-md-5 text-black">
                 <MDBTypography tag="h3" className="mb-4 text-uppercase">Delivery Info</MDBTypography>
                 
@@ -150,11 +151,12 @@ const Checkout = () => {
 
                 <div className="d-flex justify-content-end pt-3">
                
-                  <MDBBtn size="lg" className="ms-2" style={{backgroundColor: 'hsl(210, 100%, 50%)'}} onClick={display}> <Link to={value === 'COD' ? '/ordersuccess' : '/payment'}>Place order</Link></MDBBtn>
+               <MDBBtn size="lg" className="ms-2" style={{backgroundColor: 'hsl(210, 100%, 50%)'}} type="submit">  <Link to={value === 'COD' ? '/ordersuccess' : '/payment'}> Place order </Link></MDBBtn>
                 
                 </div>
 
               </MDBCardBody>
+              </form>
             </MDBCol>
             
           </MDBRow>

@@ -62,8 +62,10 @@ const Menu = styled.div`
 const Navbar = () => {
 
 const quantity=useSelector(state=>state.cart.quantity)
-const name=  useSelector(state=>state.user.currentuser.username) 
-console.log('name?',name);
+const currentUser=  useSelector(state=>state.user.currentuser) 
+if(currentUser){
+  var name =currentUser.username
+}
 
 console.log('quqntity where',quantity);
 const dispatch=useDispatch()
@@ -110,7 +112,6 @@ dispatch(logoutUser())
           <Menu>{name}</Menu>
           <Link to={'/profile'}><Menu>Profile</Menu></Link>
           <Link to={'/myorderlist'}> <Menu>My order list</Menu></Link>
-         {!name && <Menu>Sign-in</Menu>}
           <Menu onClick={Logout}>LOGOUT</Menu>
         </Right>
       </Wrapper>

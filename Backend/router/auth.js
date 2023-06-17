@@ -30,7 +30,7 @@ router.post("/signup",upload.single('Images') ,(req, res) => {
       process.env.CRYPTO_JS
     ).toString(),
     Images:req.file.originalname,
-    isAdmin:req.body.isAdmin,
+    
    
 
 });
@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
   console.log("user ?", req.body);
   try {
     const user = await User.findOne({ username: req.body.username });
-    !user && res.status(401).json("Wrong credentials !");
+    !user && res.statusCode(401).json('wrong credential !');
 
     const hashedpassword = CryptoJS.AES.decrypt(
       user.password,
@@ -58,8 +58,8 @@ router.post("/login", async (req, res) => {
     const orginalpassword = hashedpassword.toString(CryptoJS.enc.Utf8);
     console.log(orginalpassword);
 
-    orginalpassword !== req.body.password &&
-      res.status(401).json("invalid password");
+    orginalpassword !== req.body.password && 
+      res.statusCode(401).json("invalid password");
     const accesstoken = jwt.sign(
       {
         id: user._id,

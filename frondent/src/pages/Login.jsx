@@ -18,6 +18,10 @@ const Login = () => {
 const [username,setName]=useState("");
 const [password,setPassword]=useState("");
 const dispatch=useDispatch();
+
+const loginStatus=useSelector((state)=>state.user)
+console.log('loginStatus',loginStatus);
+
 const handleBar = (e)=>{
   e.preventDefault();
 login(dispatch,{username,password})
@@ -34,7 +38,7 @@ login(dispatch,{username,password})
 
       <MDBCol col='4' md='6'>
 
-
+<p style={{color:'red'}}>{loginStatus.isError == true && 'Please check User Name & password'}</p>
         <MDBInput wrapperClass='mb-4' label='User Name' id='formControlLg' type='text' size="lg" value={username} onChange={(e)=>setName(e.target.value)} />
         <MDBInput wrapperClass='mb-4' label='Password' id='formControlLg' type='password' size="lg" value={password}  onChange={(e)=>setPassword(e.target.value)}/>
 

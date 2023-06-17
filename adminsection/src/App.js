@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import Register from './Components/Register';
 function App() {
 
-  const Token=useSelector((state)=>state.userInfo.accessToken)
+  const Token=useSelector((state)=>state.adminInfo.accessToken)
 console.log('********' ,Token);
 
 const router=createBrowserRouter([

@@ -8,7 +8,7 @@ export const RegisterUser=async(formData)=>{
   console.log('enthayii ??',formData);
   try{
 const res=await publicRequest.post('/auth/signup',formData)
-console.log('register info',res.data);
+console.log('register info',res.data)
   }catch(err){
     console.log(err);
   }
@@ -22,6 +22,7 @@ export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/auth/login", user);
+    console.log('login ?',res);
     dispatch(loginSuccess(res.data));
   } catch (err) {
     dispatch(loginFailure());

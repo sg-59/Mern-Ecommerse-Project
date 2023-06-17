@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Table } from 'react-bootstrap'
 import { getUsersInfo } from '../Redux/Apicall'
 import {useDispatch, useSelector} from 'react-redux'
 import Navbar from './Navbar'
+import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
+
 
 
 const Alluser = () => {
@@ -14,39 +15,51 @@ getUsersInfo(dispatch)
 
 const Display =async ()=>{
   const res=await useSelector(state=>state.users.usersInfo)
+  console.log('all user ',res);
 setState(res)
 };
 Display();
 
   return (
-    <div>
-    <Navbar></Navbar>
-    <Table striped bordered hover>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Password</th>
-      </tr>
-    </thead>
-    {state.map((item)=>(
-        <>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>{item.username}</td>
-        <td>{item.email}</td>
-        <td>{item.password}</td>
-      </tr>
-    </tbody>
-    </>
-      ))}
-  </Table>
- 
-  
+    <MDBTable align='middle'>
+    
 
-    </div>
+  
+      <MDBTableHead>
+        <tr>
+          <th scope='col'>Name</th>
+          <th scope='col'>Email</th>
+          <th scope='col'>Mobile</th>
+          <th scope='col'>Address</th>
+        </tr>
+      </MDBTableHead>
+      {state.map((data)=>(
+      <MDBTableBody>
+        <tr>
+          <td>
+            <div className='d-flex align-items-center'>
+              <img
+                src={`/Uploads/admin/${data.Images}`}
+                alt=''
+                style={{ width: '45px', height: '45px' }}
+                className='rounded-circle'
+              />
+              <div className='ms-3'>
+                <p className='fw-bold mb-1'>{data.username}</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <p className='fw-normal mb-1'>{data.email}</p>
+          </td>
+          <td>{data.mobile}</td>
+          <td>
+          <p className='fw-normal mb-1'>{data.address}</p>
+          </td>
+        </tr>
+      </MDBTableBody>
+          ))}
+    </MDBTable>
   )
 }
 

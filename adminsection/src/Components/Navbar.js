@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutwithuser } from "../Redux/UserRedux";
+import { logoutwithadmin, logoutwithuser } from "../Redux/AdminRedux";
 
 // import {Link } from "react-router-dom";
 
@@ -45,13 +45,13 @@ const Menu = styled.div`
 
 const Navbar = () => {
   const dispatch=useDispatch()
-const name=useSelector((state)=>state.userInfo.name)
+const name=useSelector((state)=>state.adminInfo.name)
 
 console.log('//////',name);
 
 const Logout = (e)=>{
   e.preventDefault();
-  dispatch(logoutwithuser())
+  dispatch(logoutwithadmin())
 }
   return (
 

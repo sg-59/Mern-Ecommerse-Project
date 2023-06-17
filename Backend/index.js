@@ -9,6 +9,7 @@ const womensproductrouter=require('./router/womensproduct')
 const kidsproductrouter=require('./router/kidsproduct')
 const cartrouter=require('./router/cart')
 const orderrouter=require('./router/order')
+const adminauthrouter=require('./router/adminAuth')
 const cors=require('cors');
 const cookieParser = require('cookie-parser');
 
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(cookieParser());
     app.use('/api/user',userrouter);
     app.use('/api/auth',authrouter);
+    app.use('/api/adminauth',adminauthrouter);
     app.use('/api/mensproduct',mensproductrouter);
     app.use('/api/womensproduct',womensproductrouter);
     app.use('/api/kidsproduct',kidsproductrouter);
